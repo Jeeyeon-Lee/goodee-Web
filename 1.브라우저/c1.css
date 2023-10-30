@@ -1,16 +1,13 @@
 *{
     box-sizing: border-box;
 }
-
 body{
     background-color: black;
 }
-
 .line{
     position: absolute;
     background-color: white;
 }
-
 .vertical {
     height: 100%; /*화면채움*/
     width: 1px;   /*흰선 두께*/

@@ -1,0 +1,22 @@
+*{
+    /* 여백까지 계산된 박스 생성 */
+    box-sizing: border-box; 
+    border: 1px solid red;
+}
+.wrap{
+    width: 300px;
+    height: 600px;
+    border: 10px solid green;
+    margin: 100px auto;
+    /* margin 바깥여백(위아래여백, 양쪽여백) */
+}
+.wrap .box1{
+    width: 280px;
+    height: 290px;
+    background-color: yellowgreen;
+}
+.box2{
+    width: 280px;
+    height: 290px;
+    background-color: yellow;
+}
