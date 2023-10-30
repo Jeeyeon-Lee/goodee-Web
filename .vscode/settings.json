@@ -1,0 +1,15 @@
+//로컬용 vscode settings 관리
+{
+  "editor.tabSize": 4,
+  "editor.lineHeight": 1.6,
+  "editor.fontSize": 14,
+  "editor.tokenColorCustomizations": {
+    "comments": "#fff700"
+  },
+  "liveServer.settings.CustomBrowser": "chrome",
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.maxTokenizationLineLength": 2500
+  }
+}

@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: black;
+}
+
+.line{
+    position: absolute;
+    background-color: white;
+}
+
+.vertical {
+    height: 100%; /*화면채움*/
+    width: 1px;   /*흰선 두께*/
+    left: 50%;    /*x축 좌표*/
+}
+.horizontal {
+    width: 100%;
+    height: 1px;
+    left: 0;
+    top: 50%;
+}
+.label{
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(30px,30px);
+}
+.target{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-59px,-60px); */
+    transform: translate(-50%,-50%);
+}
