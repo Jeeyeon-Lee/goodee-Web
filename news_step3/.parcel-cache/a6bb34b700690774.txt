@@ -1,0 +1,13 @@
+12
+36D:\vscode_web\news_step3\.prettierrc133431953838922668 0
+32D:\vscode_web\news_step3\.vscode133431963772817842 1
+37D:\vscode_web\news_step3\package.json133431851493492150 0
+29D:\vscode_web\news_step3\dist133431977080814925 1
+47D:\vscode_web\news_step3\dist\index.c36f364e.js133431977080734502 0
+35D:\vscode_web\news_step3\index.html133431900541177153 0
+33D:\vscode_web\news_step3\index.js133431976440481564 0
+51D:\vscode_web\news_step3\dist\index.c36f364e.js.map133431977080754592 0
+40D:\vscode_web\news_step3\dist\index.html133431977080507165 0
+52D:\vscode_web\news_step3\dist\news_step3.3464ddca.js133431977080794926 0
+46D:\vscode_web\news_step3\.vscode\settings.json133431952211868792 0
+56D:\vscode_web\news_step3\dist\news_step3.3464ddca.js.map133431977080804928 0

@@ -1,0 +1,11 @@
+10
+37D:\vscode_web\news_step2\package.json133431851493492150 0
+29D:\vscode_web\news_step2\dist133431934937257726 1
+35D:\vscode_web\news_step2\index.html133431900541177153 0
+33D:\vscode_web\news_step2\index.js133431933816680511 0
+37D:\vscode_web\news_step2\환경설정.txt133431869188673847 0
+40D:\vscode_web\news_step2\dist\index.html133431934936898890 0
+51D:\vscode_web\news_step2\dist\index.c36f364e.js.map133431934937247493 0
+47D:\vscode_web\news_step2\dist\index.c36f364e.js133431934937212395 0
+52D:\vscode_web\news_step2\dist\news_step2.3464ddca.js133431934937232382 0
+56D:\vscode_web\news_step2\dist\news_step2.3464ddca.js.map133431934937257726 0
