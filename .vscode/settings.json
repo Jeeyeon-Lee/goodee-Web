@@ -11,5 +11,6 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.maxTokenizationLineLength": 2500
-  }
+  },
+  "liveServer.settings.port": 5501
 }
