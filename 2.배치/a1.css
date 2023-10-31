@@ -1,0 +1,32 @@
+.wrap{
+    width: 800px;
+    border: 10px solid black;
+    /* margin 요소 바깥 여백 */
+    margin: 100px auto;
+    
+}
+.left{
+    width: 400px;
+    height: 400px;
+    background-color: lightskyblue;
+    /* float 블록요소 - left */
+    float: left;
+}
+.rigth{
+    width: 400px;
+    height: 400px;
+    background-color: lightcoral;
+    float: left;
+}
+.wrap .bottom{
+    width: 800px;
+    height: 100px;
+    background-color: chartreuse;
+    clear: both;
+}
+.wrap::after {
+    content: "";
+    display: block;
+    clear: both;
+    /* 밀려나는 것을 방지한다 */
+}

@@ -1,0 +1,24 @@
+*{
+    border: 1px solid red;
+}
+
+.container{
+    position: relative;
+    background-color: rgb(211, 235, 255); /*1번*/
+}
+
+/* 선택자가 없는 경우에는 . 빼고 작성*/
+div{
+    width: 100px;
+    height: 100px;
+    background-color: pink;
+    margin-bottom: 10px;
+}
+.box{
+    /* contatiner의 포지션 설정여부에 따라 absolute가 적용되는 칸이 달라짐
+    포지션 없을 경우 바디 기준의 20px, 포지션 있는 경우 contatiner 기준 20px*/
+    position: absolute;
+    left: 20px;  /*x축*/
+    top: 20px;   /*y축*/
+    background-color: red;
+}

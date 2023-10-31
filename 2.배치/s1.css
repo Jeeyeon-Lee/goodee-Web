@@ -11,6 +11,8 @@
     /* margin 바깥여백(위아래여백, 양쪽여백) */
 }
 .wrap .box1{
+    /* relative로 포지션 설정하면 현재 레이아웃에 영향을 주지않으면서 위로 50px 옮겨야 함. */
+    /* margin 외부, padding 내부 영역 */
     width: 280px;
     height: 290px;
     background-color: yellowgreen;
