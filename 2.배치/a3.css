@@ -1,0 +1,33 @@
+.parent{
+    position: relative;
+    border: 5px solid blue;
+    color: blue;
+    background-color: lightblue;
+    padding: 1rem;
+}
+
+.child{
+    /* position: absolute; */
+    border: 2px dotted red;
+    color: black;
+    background-color: yellow;
+    padding: 1rem;
+}
+
+/* 상위의 포지션에 따라 배치 
+띄어쓰기는 상위선택자를 나타내고
+붙여쓰면 현재의 선택자다.*/
+.child.abs{
+    /* position: absolute; */
+    top: 0px;
+    left: 10px;
+}
+
+.child p{
+    /* position: absolute; */
+    /* top: 0px; */
+    /* right: 100px; */
+    position: relative;
+    background-color: greenyellow;
+    border: 2px dotted green;
+}

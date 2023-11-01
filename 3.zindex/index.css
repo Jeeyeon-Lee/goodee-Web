@@ -1,0 +1,98 @@
+/* border-box 여백을 포함한 사이즈로 계산해줌 */
+*{
+    box-sizing: border-box;
+    /* border: 1px solid gray; */
+}
+/*  캡쳐링, 안으로 작동 - 부모걸 없애면 자손것도 없어짐
+    버블링, 밖으로 확장되는 것 */
+ul{
+    list-style: none;
+}
+/*  반응형 웹 고려 width 100% 
+    flex(리스트 가로로 펼침)
+    justify와 같이 사용 많이 함
+    align 위아래 가운데정렬
+    z-index 배치 순서*/
+header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0px;
+    left: 0px;
+    color: white;
+    z-index: 2;
+}
+/*  띄어쓰기는 상하관계 */
+header h1{
+    font: 24px;
+    color: white;
+    font-weight: bolder;
+    z-index: 2;
+}
+
+/* margin 외부여백 메뉴바와 리스트 사이의 간격 */
+header .gnb li{
+    margin: 0px 20px;
+}
+
+/* 글자메뉴바 */
+.gnb{
+    display: flex;
+    float: left;
+    font-size: 17px;
+    font-weight: bolder;
+    z-index: 2;
+}
+
+/* 소셜메뉴바 */
+.sns{
+    display: flex;
+    font-size: 15px;
+    z-index: 2;
+}
+
+/* 이모티콘만 있어서 여백 10만 설정 */
+.sns li{
+    margin: 0px 5px;
+}
+
+.sns li a{
+    font-size: 16px;
+    color: white;
+}
+
+    /* div 비디오 관련 설정
+    vh 높이를 스크롤바 없이 화면 꽉 차게 만듦
+    position absolute로 설정하여 바디(디폴트인)에 맞춰서 위치 설정
+    overflow 스크롤바 설정 hidden(숨겨짐) */
+div{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+/*  div 하위태그  
+    object-fit : cover는 화면전체를 쫙 덮는 설정*/
+div video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*  바닥글
+    font 사이즈/로우값? "글꼴"
+    letter-spacing 자간*/
+footer{
+    position: absolute;
+    color: white;
+    width: 100%;
+    bottom: 10px;
+    font: 12px/1 "arial";
+    text-align: center;
+    letter-spacing: 3px;
+    z-index: 2;
+}
