@@ -1,0 +1,35 @@
+/* 전체크기가 지켜지도록 전체옵션으로 설정 */
+*{
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+/* padding 내부여백없애도 쩜 사라짐 */
+ul{
+    padding: 0;
+    list-style: none;
+}
+
+body{
+    background-color: gainsboro;
+    text-align: center;
+}
+
+/* 바깥테두리 
+    auto : 블록요소여서 auto로 처리?
+    radius : 모서리 둥글게*/
+.list{
+    width: 400px;
+    margin: auto;
+    background-color: beige;
+    border-radius: 20px;
+}
+/* radius 위에만 둥글게, 아래는 사각으로 */
+.header{
+    height: 48px;
+    font-size: 24px;
+    font-weight: bolder;
+    background-color: rgb(66, 33, 119);
+    border-radius: 20px 20px 0 0;
+    color: white;
+}
+
