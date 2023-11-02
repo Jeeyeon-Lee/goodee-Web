@@ -60,7 +60,7 @@ function createItem(text) {
   //createItem 호출되었을 때, 화면이 먼저 완성되고(랜더링 ==DOM TREE)되고
   //나서 버튼이 눌러지니, 그 이후 파라미터의 itemRow는 createItem함수에서 생성된 전부를 쥐고 있음.
   deleteBtn.addEventListener('click', () => {
-    iitems.removeChild(itemRow)
+    items.removeChild(itemRow)
   })
 
   //밑줄긋기
