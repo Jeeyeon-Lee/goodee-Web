@@ -39,7 +39,8 @@ input.addEventListener('keypress', (e) => {
 })
 
 //DOM html의 코드에 따른 함수 생성 -> 번거로움..
-function createItem(text) {
+// function createItem(text) {
+createItem = (text) => {
   // DOM에서 제공하는 함수를 이용한 태그 생성
   const itemRow = document.createElement('li')
   //setAttribute() : 태그에 속성 추가
