@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습[보드판매량 마진 계산]-비동기처리</title>
+    <link rel="stylesheet" href="board.css">
+</head>
+<body>
+    <!-- 
+        ES6 - 모듈화(type = module)
+        js 소스를 쪼갬. 
+    -->
+    <!-- 버튼을 눌렀을 때 집계(btnMargin에 버튼의 주소번지 넣기)되는 메소드 -->
+    <script>
+        window.addEventListener('load',(event)=>{
+            const btnMargin = document.querySelector("#btnMargin")
+            btnMargin.addEventListener('click',(e)=>{
+                console.log(e.target);
+                getBoardSold();
+            })
+        })
+        </script>
+    <h2>보드 판매량</h2>
+    <table width="300px" height="80px">
+        <tr>
+            <th width="120px">보드 판매량</th>
+            <td width="180px"><span id="boardSold">10</span></td>
+        </tr>
+        <!-- 
+            소비자가-구매가=보드 한개당 마진 금액
+            한개당 마진 금액*판매량=마진금액계산
+        -->
+        <tr>
+            <th>구매가</th>
+            <td><span id="cost">100</span>원</td>
+        </tr>
+        <tr>
+            <th>소비자가</th>
+            <td><span id="price">120</span>원</td>
+        </tr>
+    </table>
+    <h2>마진금액 : <span id="cash">0</span>원</h2>
+    <button type="submit" id="btnMargin">마진계산</button>
+    <script src="board.js"></script>
+</body>
+</html>
+</body>
+</html>
