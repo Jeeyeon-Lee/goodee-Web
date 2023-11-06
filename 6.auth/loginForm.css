@@ -1,4 +1,9 @@
+*{
+    border: 1px solid red;
+}
 .bg{
+    top: 0;
+    left: 0;
     position: absolute;
     width : 100%;
     height: 100vh;
@@ -101,6 +106,14 @@ input[type='email']:focus{
 .btn_google{
     background-color: white;
     border: 1pxa solid gainsboro;
+    background-color: rgb(186, 192, 202);
+    color: white;
+    background: linear-gradient(
+    90deg,
+    rgb(24, 12, 255) 0%,
+    rgb(94, 212, 98) 51%,
+    rgb(255, 0, 0) 100%
+  )
 }
 .btn_facebook{
     background-color: rgb(5, 92, 255);
@@ -108,7 +121,26 @@ input[type='email']:focus{
     color: white;
 }
 .btn_github{
-    background-color: black;
     color: white;
     border: 1pxa solid gainsboro;
+    background: linear-gradient(
+    90deg,
+    rgb(0, 0, 0) 0%,
+    rgb(76, 78, 76) 51%,
+    rgb(133, 130, 130) 100%
+    )
+}
+
+#google{
+    border-radius: 20px;
+    margin: 10px;
+    font-size: 20px;
+}
+#facebook{
+    margin: 10px;
+    font-size: 20px;
+}
+#github{
+    margin: 10px;
+    font-size: 20px;
 }
