@@ -1,0 +1,21 @@
+전제조건 - node.js설치 
+노드환경 구성
+익스프레스 프로젝트 자동으로 생성해주는 express-generator 모듈 설치
+(익스프레스 노드 기반 웹 애플리케이션 개발 지원 프레임워크)
+
+프로젝트 폴더에서 Cmder창에서  
+npm install express-genereator -g 엔터
+
+프로젝트 생성
+express -e [프로젝트명 mybook]
+
+npm install [모듈명] -g 
+(g : 전역적 설치, 전체 프로젝트 공통 사용 가능)
+
+npm install [모듈명] --save
+(현재 작업 중인 프로젝트에 모듈을 설치할 때 사용하는 방식)
+옵션으로 현재 플젝의 package.json에 모듈이름과 버전을 추가함. 
+
+에러발생시?
+npm install 엔터
+의존성 관계에 있는 외부라이브러리 재설치
