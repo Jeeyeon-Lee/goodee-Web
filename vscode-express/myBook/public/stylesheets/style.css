@@ -2,11 +2,6 @@
 *{
   box-sizing: border-box;
 }
-.navbar-brand{
-  top: 10px;
-  color: white;
-  font-size: 50;
-}
 a {
   color: #00B7FF;
 }
