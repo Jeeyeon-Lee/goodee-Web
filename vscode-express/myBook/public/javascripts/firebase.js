@@ -1,4 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+// import { initializeApp } from 'firebase/app';
 const firebaseConfig = {
   apiKey: 'AIzaSyCltWlMRHeCS61FnAfLs3B-hsgaK_o5Nl0',
   authDomain: 'goodee-project-b2af0.firebaseapp.com',
