@@ -38,6 +38,7 @@ depts.forEach((dept, index) => {
     console.log(dept['loc'])
   }
 })
+
 depts.forEach((dept, index) => {
   if (index === 1) {
     console.log(dept)

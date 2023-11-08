@@ -54,19 +54,49 @@
 
 <!-- 캐러셀 ---------------------------------------------------------------------------->
 <!-- 스크립트 이벤트  처리 ---------------------------------------------------------------------------->
+<!-- //export된 객체를 사용하기 위해서는 반드시 타입에 모듈을 작성해야 함.  -->
+<!-- //firebase.js에 정의되어있어서 import문이 필요함!(객체를 사용하기 위해서는) -->
+<script type="module">
+  import{app} from "/javascripts/firebase.js"
+  // signOut 구글에서 정리된 모듈 ->login.ejs 링크 확인 
+  import{signOut, getAuth} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"
+  //app으로 필요로하는 정보넘김
+  const auth = getAuth(app);
+  console.log(auth);
+  //DOM API - 복잡하고 가독성 낮음 -> JQuery가 제공하는 API로 가독성 좋게 DOM 조작하기 위해 사용
+  // 로그아웃 클릭 시 처음 페이지로 돌아가도록 설정 localhost:3000/으로 이동
+  // document.getElementById("logout").addEventListener('click',()=>{})  //DOM API 사용(표준)
+  // 코드 양이 늘어나고, 함수를 외워야 가능함. (단점 있음...)
+  // $(...)is not defined -> index.js에 jquery 1.12.0.js 임포트 되었는지 확인
+  $('#logout').on('click',()=>{
+    auth.signOut();
+    //아래 코드는 location.href="/"만나면 볼 수 없음. 왜냐면 주소 url 바뀌니까??
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      console.log("로그아웃 성공-구글서버");
+    }).catch((error) => {
+      // 로그아웃 실패 시 호출 - 로그를 통해 정보 수집
+      console.log(error);
+    }); 
+    localStorage.clear()
+    location.href="/"
+  })
+
+</script>
 <script>
   console.log(`header - ${localStorage.getItem('email')}`);
   // 로컬스토리지에 이메일 주소 있어?? 
   // toggle() 켜져있음 꺼주고, 꺼져있음 켜주는 것
-  if(localStorage.getItem('email')){ //값이 들어가기 때문에 true임!! 
-    $('#login,#logout,#cart,#mypage').toggle();
-    $('#logout a').html(localStorage.getItem('email'))
+  if (localStorage.getItem('email')) {
+    //왜 참이야?
+    console.log('여기로 들어왔니?');
+    //보이는 건 안보임, 안보이는건 보임
+    $('#login,  #logout, #mypage, #cart').toggle();
+    
+    $('#mypage a').html(localStorage.getItem('email'));
+
   }
-  // 로그아웃 클릭 시 처음 페이지로 돌아가도록 설정 localhost:3000/으로 이동
-  $('#logout').on('click',()=>{
-    localStorage.clear()
-    location.href="/"
-  })
+
 
   //function -> 전역적사용(호이스팅이슈 있음. 함수를 선호출한다.) / arrow function -> 순차적 사용(호이스팅 이슈 없음. 함수 호출 가능)
   // applySlider()

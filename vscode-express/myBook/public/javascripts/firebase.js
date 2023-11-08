@@ -1,6 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
 // import { initializeApp } from 'firebase/app';
-const firebaseConfig = {
+//type = module로 해야 모듈 사용 가능 
+const firebaseConfig = { //객체 : 키:값
   apiKey: 'AIzaSyCltWlMRHeCS61FnAfLs3B-hsgaK_o5Nl0',
   authDomain: 'goodee-project-b2af0.firebaseapp.com',
   projectId: 'goodee-project-b2af0',
