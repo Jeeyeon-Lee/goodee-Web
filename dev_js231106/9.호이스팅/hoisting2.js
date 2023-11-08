@@ -19,11 +19,11 @@ for (let i = 0; i < btns.length; i++) {
 
 //괄호로 가두고 파라미터로 i를 받지만, 가두어진 파라미터 자리에 index 변수를 사용하여 문제를 해결함.
 //2. ES5에서 호이스팅 이슈 해결하던 즉시실행함수
+//  2. 즉시실행함수로 작성
 for (var i = 0; i < btns.length; i++) {
-  ((index) => {
-    btns[i].addEventListener('click', (event) => {
-      console.log(event.target)
-      console.log(i)
+  ;((index) => {
+    btns[index].addEventListener('click', (event) => {
+      console.log(index)
     })
-  })(i) //즉시실행 부분
-}
+  })(i) //즉시실행함수 처리한 부분
+} //end of for
