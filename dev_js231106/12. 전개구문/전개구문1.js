@@ -6,17 +6,18 @@ const names = ['나신입', '강감찬', '이성계']
 const names2 = [...names, '나초보']
 const names3 = ['나신입', '강감찬', '이성계']
 
-console.log(names2)
-console.log(names)
+console.log(names) //['나신입', '강감찬', '이성계']
+console.log(names2) //['나신입', '강감찬', '이성계', '나초보']
+console.log(names3)
 console.log(names == names2)
 console.log(names === names2) // 타입까지도 같은지 확인하는것이므로 false
 console.log(names == names3) // false : 주소번지 비교
 console.log(names === names3) // false : 주소번지 비교
 
 let dept = {
-  deptno: 10,
-  dname: '총무부',
-  loc: '부산',
+  deptno: 1,
+  dname: '대표',
+  loc: '금천',
 }
 
 let emp = {
@@ -42,9 +43,9 @@ console.log(depts3)
 depts.forEach((dept) => console.log(dept))
 depts.forEach((dept, index) => {
   if (index === 1) {
-    console.log(dept)
-    console.log(dept.dname)
-    console.log(dept['loc'])
+    console.log(dept) //  { deprno: 20, dname: '개발부', loc: '서울' },
+    console.log(dept.dname) //'개발부'
+    console.log(dept['loc']) //'서울'
   }
 })
 

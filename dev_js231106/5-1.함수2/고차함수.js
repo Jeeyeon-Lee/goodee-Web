@@ -12,7 +12,7 @@ console.log(sayHello) // [Function : sayHello]
 //출력을 위해 필요한과정
 const myFunc = sayHello()
 sayHello()
-
+// myFunc()
 console.log(myFunc) //[Function (anonymous : 익명)]
 hap = (a, b) => {
   return a + b

@@ -14,7 +14,7 @@ console.log(result3)
 
 //splice & slice -> 얕은 복사, 깊은 복사의 문제
 //splice 하나인것? 원본에 하나가 추가됨
-names.splice(1, 0, '지연')
+names.splice(1, 0, '지연2')
 console.log(names)
 
 //slice

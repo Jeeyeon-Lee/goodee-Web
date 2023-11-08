@@ -73,13 +73,13 @@
     //아래 코드는 location.href="/"만나면 볼 수 없음. 왜냐면 주소 url 바뀌니까??
     signOut(auth).then(() => {
       // Sign-out successful.
+      location.href="/"
       console.log("로그아웃 성공-구글서버");
     }).catch((error) => {
       // 로그아웃 실패 시 호출 - 로그를 통해 정보 수집
       console.log(error);
     }); 
     localStorage.clear()
-    location.href="/"
   })
 
 </script>

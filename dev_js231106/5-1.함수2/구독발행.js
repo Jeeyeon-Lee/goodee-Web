@@ -8,8 +8,8 @@ const createStroe = () => {
   let handlers = []
   const send = () => {}
   //구독해줘를 함수에 담아->영속성, 유지
-  const subscribe = (handlers) => {
-    handlers.push(handlers)
+  const subscribe = (a) => {
+    handlers.push(a)
   }
   return {
     send,
