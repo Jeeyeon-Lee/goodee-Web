@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h3>시작</h3>
+  <script>
+    const fruits = ['🍉', '🥝', '🍓']
+    fruits.forEach((element, cnt) => {
+      console.log(cnt, element)
+      //document는 문서 전체 받는 객체
+      //브라우저에 js코드를 갖고 태그나 문자를 작성 
+      document.write(cnt, element)
+    }) //0'🍉', 1'🥝', 2'🍓'
+    //자바를 가지고도 브라우저 쓴다가 되면 웹서비스 제공할 수 있다-서블릿
+  </script>
+  <h3>끝</h3>
+</body>
+</html>
