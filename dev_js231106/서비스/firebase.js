@@ -1,4 +1,4 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js'
 // import { initializeApp } from 'firebase/app';
 //type = module로 해야 모듈 사용 가능
 const firebaseConfig = {
@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: 'goodee-project-b2af0.appspot.com',
   messagingSenderId: '457035965872',
   appId: '1:457035965872:web:dc2ccf6a403dd450d0e275',
-};
+}
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const firebaseapp = initializeApp(firebaseConfig)

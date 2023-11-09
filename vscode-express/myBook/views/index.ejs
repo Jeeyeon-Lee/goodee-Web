@@ -19,9 +19,22 @@
   <body>
     <div class="container">
       <%-include("header.ejs")%>
+
+      <div class="row my-5" id="loading" >
+        <!-- /public/images/loading.gif로 작성할 경우, static 작성부분으로 인해 오류 발생 -->
+        <div class="col my-5"><img src="/images/loading.gif" alt="로딩이미지"></div>
+      </div>
       <%-include(pageName)%>
       <%-include("footer.ejs")%>
     </div>
   </body>
+  <script>
+    // DOM 다 그려진거야??
+    $(document).on('ready',()=>{
+      setTimeout(()=>{
+        $('#loading').hide()
+      },500)  //0.3초 간격
+    })
+  </script>
 </html>
 

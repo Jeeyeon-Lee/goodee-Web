@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler - 요청객체, 응답객체 주입(요청이 있어야 사용할 수 있음)
-// next 다음 미들웨어로 이동할 때 꼭 필요!! 마지막 파라미터에는 next 들어가야함. 
+// next 다음 미들웨어로 이동할 때 꼭 필요!! 마지막 파라미터에는 next 들어가야함.
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
