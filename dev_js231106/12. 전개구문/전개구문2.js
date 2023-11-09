@@ -2,7 +2,7 @@
 //spread operator를 이용해 배열을 복사 -> 깊은 복사
 
 //얜 객체인건지, 배열인건지 무엇인건지??
-let depts = [
+let depts1 = [
   {
     0: { deprno: 10, dname: '총무부0', loc: '부산0' },
     1: { deprno: 20, dname: '개발부0', loc: '서울0' },
