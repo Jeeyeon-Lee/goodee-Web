@@ -2,7 +2,7 @@
 //spread operator를 이용해 배열을 복사 -> 깊은 복사
 
 //얜 객체인건지, 배열인건지 무엇인건지??
-let depts1 = [
+let depts = [
   {
     0: { deprno: 10, dname: '총무부0', loc: '부산0' },
     1: { deprno: 20, dname: '개발부0', loc: '서울0' },
@@ -26,7 +26,6 @@ let depts2 = [
 
 //유사배열 가능한가???? 어떻게 해야 가져올 수 있지??
 //맵으로? forEach로???
-const 
 depts.forEach((dept, index) => {
   if (index === 0) {
     console.log(dept)
