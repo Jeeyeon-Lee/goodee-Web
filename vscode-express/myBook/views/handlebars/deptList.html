@@ -24,6 +24,7 @@
     표준이 아니라는 건 재해석이 필요하다는 것 - 모르는 애다.
     재해석해야한다(파싱해야 한다.) 
     핸들바스로 되어있는 템플릿을 컴파일한다. 
+    mime type을 핸들바스로 줌 
   -->
   <script id="tb_dept" type="text/x-handlebars-template">
   <table class="table">
@@ -58,9 +59,9 @@
     { deptno: 30, dname: "품질관리팀", loc: "세종" },
   ],
   };
-  // 핸들바 템플릿에서 데이터를 바인딩해서 html 새로 생성함
+  // 핸들바 템플릿에서 데이터를 바인딩해서 html 새로 생성함 
   const deptList = template(data)
-  // 위에서 생성된 템플릿을 body태그에 붙여넣음. 
+  // 위에서 생성된 템플릿을 body태그에 붙여넣음. 여기서 화면에 삽입
   $('body').append(deptList)
 </script>
 </html>

@@ -1,0 +1,40 @@
+*{
+  margin : 0px;
+  box-sizing: border-box;
+}
+
+li{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+body{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .list {
+  display: flex;
+}
+body .list li {
+  width: 150px;
+  height: 50px;
+  border: 1px solid gray;
+}
+body .list li a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: bold 16px/1 "arial";
+  color: black;
+}
+body .list li.on a {
+  background-color: rgb(10, 145, 6);
+  color: rgb(255, 251, 246);
+}
