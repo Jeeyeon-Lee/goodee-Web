@@ -4,7 +4,7 @@
 const ajax = new XMLHttpRequest() 
 ajax.open('GET', Youtube_URL, false)
 ajax.send() 
-const Youtube_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyAzxSeXI1gsMWlv9rjkOfzasmyOcux9MX0&maxResults=15&chart=mostPopular"
+const Youtube_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyAzxSeXI1gsMWlv9rjkOfzasmyOcux9MX0&maxResults=12&chart=mostPopular"
 
 //JSON 문자열로 바꿈 [object Object] -> {title:제목, contents:[{},{},{}...]}
 const mostPopular = JSON.parse(ajax.response)  
@@ -18,7 +18,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyAzxSeXI1gsMWlv9rjkOfzasmyOcux9MX0&maxResults=15&chart=mostPopular", requestOptions)
+fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyAzxSeXI1gsMWlv9rjkOfzasmyOcux9MX0&maxResults=12&chart=mostPopular", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
