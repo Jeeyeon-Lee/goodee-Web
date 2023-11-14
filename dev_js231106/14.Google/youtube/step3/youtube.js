@@ -43,7 +43,7 @@ const search = (query) => {
   // insert here - 검색 결과를 가져오는 코드 작성하기
 
   const ajax = new XMLHttpRequest()
-  const Youtube_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyBoVAFLvM6Bwx6Gkf-FLNdDE5QkCDUnYK8&maxResults=25&q=${query}`
+  const Youtube_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyDxz9zom15jNp-zcrlGtYj2eOMmK8ZcUko&maxResults=25&q=${query}`
   ajax.open('GET', Youtube_URL, false)
   ajax.send() //send()호출될 때 비로서 서버측에 요청이 일어남 0번에서 출발함 -1) -2) -3) -> 4(도착)
 
