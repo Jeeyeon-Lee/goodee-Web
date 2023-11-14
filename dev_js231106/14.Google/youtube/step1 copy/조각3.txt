@@ -1,5 +1,0 @@
-키워드 : innerHTML, innerText
-jquery에서는 XXX,html() or XXX.text()
-
-document.querySelector('#root').innerHTML = content
-이러한 패턴 reactjs에서도 동일하게 적용됨 . 

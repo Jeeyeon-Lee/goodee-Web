@@ -39,6 +39,13 @@
   margin: 0px;
   gap: 14px;
 }
+
+.container{
+  width: 100%;
+  padding: 0.2rem;
+  
+}
+
 .video{
   display: flex;
   border: 1px solid blanchedalmond;
