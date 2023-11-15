@@ -7,13 +7,16 @@
   <link rel="stylesheet" href="picture.css">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script>
+    //마우스가 오버했을 때?메소드 실행
     startMethod = (td) =>{
-      // console.log('startMethod');
+      const cid = $(td).attr("id") // 1, 2, 3, 4
+      console.log(cid);
       $.ajax({
-        type : 'GET',
-        url : './pictureDetail.html',
-        dataType : 'html',
+        type : "GET",
+        url : "http://127.0.0.1:5500/23.Ajax/pictureDetail.html?id="+cid+"&timestamp="+new Date().getTime(),
+        dataType : "html",
         success:function(view){
+          console.log(view);
           $('#d_pic').html(view)
         }
       })
@@ -21,14 +24,21 @@
     //아래 함수는 jquery에서 제공됨 
     //min은 줄바꿈 떼고 파일크기를 최소화한 파일을 말함. -> 속도차이 영향
     //html 태그는 인터프리터 되며, text() 태그 그대로 출력됨. 
+    //기존 요청이 끊어지고 새로운 요청이 발생함. 
     clearMethod = () =>{
-      $("#d_pic").html("사진에 마우스가 오버되었음.")
+      $("#d_pic").html("")
       // console.log('clearMethod');
+    }
+
+    //아래코드 실행 시 새로운 페이지로 이동 & 요청 끊어짐 왜?? 
+    //http의 경우, 비상태 프로토콜로 상태유지가 되지 않는다. 
+    moveTO = () =>{
+      location.href="pictureChange.html"
     }
   </script>
 </head>
 <body>
-  <div id="d_pic">상세보기(큰 사진)</div>
+  <div id="d_pic">(큰 사진)</div>
   <table border="1">
     <thead>
       <th colspan="2">그림 목록</th>
@@ -36,18 +46,10 @@
     <tbody>
       <tr>
         <td align="center">
-          <img src="../../images/sample/회의.jpg" width="50" height="50" />
-        </td>
-        <td id="0" onmouseover="startMethod(this)" onmouseout="clearMethod()">
-          사진1
-        </td>
-      </tr>
-      <tr>
-        <td align="center">
           <img src="../../images/sample/회의-1.jpg" width="50" height="50" />
         </td>
         <td id="1" onmouseover="startMethod(this)" onmouseout="clearMethod()">
-          사진2
+          사진1
         </td>
       </tr>
       <tr>
@@ -55,7 +57,7 @@
           <img src="../../images/sample/회의-2.jpg" width="50" height="50" />
         </td>
         <td id="2" onmouseover="startMethod(this)" onmouseout="clearMethod()">
-          사진3
+          사진2
         </td>
       </tr>
       <tr>
@@ -63,10 +65,19 @@
           <img src="../../images/sample/회의-3.jpg" width="50" height="50" />
         </td>
         <td id="3" onmouseover="startMethod(this)" onmouseout="clearMethod()">
+          사진3
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <img src="../../images/sample/회의-4.jpg" width="50" height="50" />
+        </td>
+        <td id="4" onmouseover="startMethod(this)" onmouseout="clearMethod()">
           사진4
         </td>
       </tr>
     </tbody>
   </table>
+  <input type="button" value="이동" onclick="moveTO()">
 </body>
 </html>
