@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="picture.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    startMethod = (td) =>{
+      // console.log('startMethod');
+      $.ajax({
+        type : 'GET',
+        url : './pictureDetail.html',
+        dataType : 'html',
+        success:function(view){
+          $('#d_pic').html(view)
+        }
+      })
+    }
+    //아래 함수는 jquery에서 제공됨 
+    //min은 줄바꿈 떼고 파일크기를 최소화한 파일을 말함. -> 속도차이 영향
+    //html 태그는 인터프리터 되며, text() 태그 그대로 출력됨. 
+    clearMethod = () =>{
+      $("#d_pic").html("사진에 마우스가 오버되었음.")
+      // console.log('clearMethod');
+    }
+  </script>
+</head>
+<body>
+  <div id="d_pic">상세보기(큰 사진)</div>
+  <table border="1">
+    <thead>
+      <th colspan="2">그림 목록</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td align="center">
+          <img src="../../images/sample/회의.jpg" width="50" height="50" />
+        </td>
+        <td id="0" onmouseover="startMethod(this)" onmouseout="clearMethod()">
+          사진1
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <img src="../../images/sample/회의-1.jpg" width="50" height="50" />
+        </td>
+        <td id="1" onmouseover="startMethod(this)" onmouseout="clearMethod()">
+          사진2
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <img src="../../images/sample/회의-2.jpg" width="50" height="50" />
+        </td>
+        <td id="2" onmouseover="startMethod(this)" onmouseout="clearMethod()">
+          사진3
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <img src="../../images/sample/회의-3.jpg" width="50" height="50" />
+        </td>
+        <td id="3" onmouseover="startMethod(this)" onmouseout="clearMethod()">
+          사진4
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

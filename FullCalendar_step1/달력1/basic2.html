@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본달력 테스트 - 실습</title>
+    <!-- CDN 방식 import  -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.querySelector('#calendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar:{
+            left: 'prev, next today',
+            center: 'title',
+            right: 'dayGridMonth, timeGridWeek,listWeek'
+        },
+        //일정에 대한 데이터셋 가져오기(배열, 계속 쌓여나감)
+        eventSources: [{
+            events: function(info, successCallback, failureCallback) {
+                $.ajax({
+                    url: 'events2.json',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);                //js의 객체로(여기선 배열)
+                        console.log(JSON.stringify(data));//문자열로 
+                        const temp = JSON.stringify(data) //temp로 담았다가 
+                        console.log(JSON.parse(temp));    //다시 js의 객체로(여기선 배열) 
+                        data.map((item)=>{
+                            console.log(item.title, item.start);
+                        })
+                        successCallback(data);
+                    }
+                });//end of ajax
+            },//end of events
+            // color : '#FF0000',
+            textColor : '#FFFF00'
+	    }]//end of eventSources
+    });
+        calendar.render();
+    });
+
+    </script>
+</head>
+<body>
+    <div id="calendar"></div>
+</body>
+</html>
