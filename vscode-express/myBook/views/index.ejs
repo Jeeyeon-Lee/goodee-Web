@@ -25,8 +25,11 @@
         <!-- /public/images/loading.gif로 작성할 경우, static 작성부분으로 인해 오류 발생 -->
         <div class="col my-5"><img src="/images/loading.gif" alt="로딩이미지"></div>
       </div>
+      <!-- 여기서 pageName은 변수임. 여기서 해당 페이지별 주소로 치환이 됨.  
+      라우트의 index.je에 등록된 이름에 따라 호출됨. pageName  자리에 치환됨. -->
       <%-include(pageName)%>
       <%-include("footer.ejs")%>
+      <%-include("common/modal_alert.ejs")%>
     </div>
   </body>
   <script>

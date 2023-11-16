@@ -1,0 +1,47 @@
+<div class="row my-5">
+  <div class="col">
+      <h1 class="text-center mb-5">글쓰기</h1>
+      <form name="frm" method="post">
+          <input class="form-control my-2" name="title" placeholder="제목을 입력하세요.">
+          <textarea class="form-control" name="body" rows="10" placeholder="내용을 입력하세요."></textarea>
+          <div class="text-center my-2">
+              <button class="btn btn-primary">글등록</button>
+              <button class="btn btn-secondary" type="reset">등록취소</button>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- 외부에서 제공되는 라이브러리 사용 app생성 뒤 db 연동해야 함. 서로 연관관계 있음. -->
+<!-- //날짜 가져오기???  (https://cdnjs.com/libraries/moment.js) -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script type="module"> 
+  import {app} from '/javascripts/firebase.js'
+  import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+  const db = getFirestore(app)
+
+  // 이벤트처리!! 버튼이 눌렸을 때, db에 보내져야 함!
+  $(frm).on('submit',async(event)=>{
+    event.preventDefault() //버튼 서브밋으로 인한 새로고침 방지(사이드이펙트)
+    let title = $(frm.title).val() //val() 사용자 입력 제목
+    let body = $(frm.body).val() //val() 사용자 입력 
+    // 로그인 성공 후 로컬스토리지에 담기는 email가져와서 작성자로 한다. 
+    
+    // 유효성 검사 추가 : 제목, 내용 입력안된 상태야?
+    if(title == ""||body ==""){
+      $('#modal-alert .modal-body').html('제목 또는 내용을 입력하세요🥲')
+      $('#modal-alert').modal('show')
+    }//모두 작성이 되었다면?
+    else{
+      let email = localStorage.getItem('email')
+      //날짜 설정
+      let date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      console.log(`${title}, ${body}, ${email}, ${date}`);
+      // 쌍 이름이 같으면 생략 가능하지만 유의해야함.(ES6 부터 가능) 
+      // collection은 폴더, board라는 폴더를 클라우드에 만들고, 글쓰기 등록된 것을 넣음. 
+      // await addDoc(collection(db,'board'),{email,title,body,date})
+      await addDoc(collection(db,'board'),{email:email,title:title,body:body,date:date})
+      //firebase 서버 저장되면 어디로 가야하지?? 목록페이지로 가자~!
+      location.href='/board'
+    }
+  })
+</script>

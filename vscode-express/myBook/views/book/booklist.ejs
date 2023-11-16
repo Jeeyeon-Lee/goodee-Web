@@ -78,9 +78,9 @@ $('#prev').on('click',e=>{
   const bookList =()=>{
     console.log(`page = ${page}.query=${query}`);
     $.ajax({
-      type:"get",
-      url:"https://dapi.kakao.com/v3/search/book.json?target=title",
-      headers : {Authorization : "KakaoAK eead243643c8e51d68e243c70e5b0823"},
+      type:"GET",
+      url:"https://dapi.kakao.com/v3/search/book?target=title",
+      headers : {Authorization : "KakaoAK bb648d6cb290a85832f449fed6738ea3"},
       data:{query:query,page:page, size:20},
       dataType:'JSON',
       success: function(data){

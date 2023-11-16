@@ -24,22 +24,6 @@ class AuthLogic {
 //default 하나밖에 export 안 된다
 export default AuthLogic;
 
-//카카오 인증요청하기(전처리 필요)
-export const loginKakao = (params) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const response = axios({
-        method: 'get',
-        url: '카카오토큰을 받아올 URL주소 -카카오개발자 센터 긁어옴',
-        params: params,
-      });
-      console.log(response);
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}; //end of loginKakao
 //구글 인증요청하기(전처리 필요)
 export const loginGoogle = (params) => {
   return new Promise((resolve, reject) => {
