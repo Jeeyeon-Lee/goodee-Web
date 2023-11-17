@@ -14,7 +14,11 @@ router.get('/join', function (req, res, next) {
   res.render('index', { title: '회원가입', pageName: 'users/join.ejs' });
 });
 router.get('/mypage', function (req, res, next) {
-  res.render('index', { title: '마이페이지', pageName: 'users/mypage.ejs' });
+  res.render('index', { title: 'MyPage', pageName: 'users/mypage.ejs' });
+});
+
+router.get('/update', function (req, res, next) {
+  res.render('index', { title: '회원정보수정', pageName: 'users/update.ejs' });
 });
 
 module.exports = router;

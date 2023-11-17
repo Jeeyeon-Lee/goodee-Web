@@ -1,3 +1,12 @@
+<style>
+  /* 960보다 넓으면 없애도록 반응형 웹으로 설정 */
+  @media screen and (max-width: 960px){
+    #slider-div{
+      display: none;
+    }
+  }
+    
+</style>
 <nav class="navbar navbar-expand-lg bg-info">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">한빛미디어</a>
@@ -14,22 +23,23 @@
           <a class="nav-link active" aria-current="page" href="/board" >게시판</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" id="youtube">▶️유튜브</a>
+          <a class="nav-link active" aria-current="page" href="#" id="youtube">🎞️유튜브</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" id="movie">🎦영화</a>
+          <a class="nav-link active" aria-current="page" href="#" id="movie">🎥영화</a>
         </li>
         <!-- 스타일은 클래스나 태그로, 이벤트는 id로!!  -->
         <li class="nav-item" id="cart" style="display: none;">
           <a class="nav-link active" aria-current="page" href="/users/cart">장바구니</a>
         </li>
       </ul>
+      <!-- ====================================[index/users]=================================== -->
       <div class="d-flex">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" id="login">
             <a class="nav-link active" aria-current="page" href="/login">로그인</a>
           </li>
-          <li class="nav-item" id="mypage" style="display: none;">
+          <li class="nav-item" id="email" style="display: none;">
             <a class="nav-link active" aria-current="page" href="/users/mypage">마이페이지</a>
           </li>
           <li class="nav-item" id="logout" style="display: none;">
@@ -97,9 +107,9 @@
     //왜 참이야?
     console.log('여기로 들어왔니?');
     //보이는 건 안보임, 안보이는건 보임
-    $('#login,  #logout, #mypage, #cart').toggle();
+    $('#login,  #logout, #email, #cart').toggle();
     
-    $('#mypage a').html(localStorage.getItem('email'));
+    $('#email a').html(localStorage.getItem('email'));
 
   }
 

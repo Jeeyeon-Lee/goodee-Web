@@ -1,0 +1,68 @@
+<div class="row my-5">
+  <div class="col">
+      <h1 class="text-center mb-5">글수정</h1>
+      <form name="frm" method="post">
+          <input class="form-control my-2" name="title" placeholder="제목을 입력하세요.">
+          <textarea class="form-control" name="body" rows="10" placeholder="내용을 입력하세요."></textarea>
+          <div class="text-center my-2">
+              <button class="btn btn-primary">글수정</button>
+              <button class="btn btn-secondary" type="reset">수정취소</button>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- 
+  CRUD 패턴화
+  입력 : 새로 쓰기 -> UI -> 입력 -> 저장(DB연동 - await addDOC) -> 목록으로 이동
+  수정 : 기존 것 바꾸기 -> DB 경유 -> UI 출력(수정페이지) -> 수정내용 작성 -> 저장(DB연동 - setDoc) -> 목록으로 이동
+        내가 어디서 왔지?(정보의 관리) -> '이전' 버튼을 눌렀을 때 내가 있던 곳으로 가도록!(고객에 대한 배려) 
+  삭제 : 기존 것 삭제하기 -> 비번 유무에 따라 로직 달라짐(업무 프로세스에 따라 달라짐)
+  조회 : 기존 것 꺼내오기 -> DB 경유 -> 조회 -> 가져오기(여러개? 한개?)
+-->
+<script type="module"> 
+  import {app} from '/javascripts/firebase.js'
+  import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+  const db = getFirestore(app)
+
+  //사용자 선택  id 번호 가져오기
+  const id = '<%=id%>' 
+  console.log(id);
+
+  let row = null;
+
+  getRow()
+  async function getRow(){
+    //데이터 이미지화 해서 읽고 쓴다 - firebase database
+    const snapshot = await getDoc(doc(db,`board/${id}`))
+    row = snapshot.data()
+    console.log(row);
+    //db에서 꺼내온 값으로 화면을 초기화
+    //(method) JQuery.val(value: string | number | string[]): JQuery (+2 overloads)
+
+    $(frm.title).val(row.title)
+    $(frm.body).val(row.body)
+  }
+
+  $(frm).on('submit',async(event)=>{
+    console.log('글수정 클릭');
+    event.preventDefault() //버튼 서브밋으로 인한 새로고침 방지(사이드이펙트)
+    $("#modal-confirm .modal-body").html("수정된 정보를 저장하시겠습니까?")
+    $("#modal-confirm").modal("show")
+    //모달창의 버튼을 눌렀을 때 이벤트 실행 -> 외부에서 호출되는 함수가 아님
+    //-> 화살표 함수로 작성해도 됨.(수정하기 처리에 대한 콜백)
+    let title = $(frm.title).val() //val() 사용자 입력 제목
+    let body = $(frm.body).val() //val() 사용자 입력 
+    $("#modal-confirm").on('click','.btn-primary',async()=>{
+      await setDoc(doc(db,`board/${id}`),{
+        ...row, title:title, body:body
+      })
+      //성공하면 목록페이지로 이동
+      location.href = '/board'
+    })
+    //리셋처리하기
+    $(frm).on('reset',(e)=>{
+      e.preventDefault()
+      getRow()
+    })
+  })
+</script>
