@@ -16,34 +16,42 @@
 
 <script>
   //가격 포맷형식 적용하기
-  Handlebars.registerHelper("format", function(price){
-      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
-  })
+  Handlebars.registerHelper('format', function (price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+  });
   //이미지 처리하는 헬퍼
-  Handlebars.registerHelper("image", function(thum){
-      if(thum) return thum;
-      else return "https://via.placeholder.com/120x174";
-  })
+  Handlebars.registerHelper('image', function (thum) {
+    if (thum) return thum;
+    else return 'https://via.placeholder.com/120x174';
+  });
 </script>
 <!-- list_book안에 들어갈 템플릿 작성하기 -->
 <script id="temp_book" type="text/x-handlebars-template">
   {{#each documents}}
-  <div class="col-6 col-md-4 col-lg-2" >
-    <div class="card my-2">
-      <div class="card-body" >
-        <img src="{{image thumbnail}}" alt ="도서이미지" style="cursor: pointer;width: 80%;" index="{{@index}}">
-        <div class="mt-2">
-          {{title}}({{authors}})
+    <div class='col-6 col-md-4 col-lg-2'>
+      <div class='card my-2'>
+        <div class='card-body'>
+          <img
+            src='{{image thumbnail}}'
+            alt='도서이미지'
+            style='cursor: pointer;width: 80%;'
+            index='{{@index}}'
+          />
+          <div class='mt-2'>
+            {{title}}({{authors}})
+          </div>
         </div>
-      </div>
-      <div class="card-footer" style="font-size: 0.8rem;" >
-        <div class="text-center">
-          {{format price}}<a href="{{url}}">(url)</a>
-          <span class="cart ms-3" style="cursor: pointer;color: green;">CART</span>
+        <div class='card-footer' style='font-size: 0.8rem;'>
+          <div class='text-center'>
+            {{format price}}<a href='{{url}}'>(url)</a>
+            <span
+              class='cart ms-3'
+              style='cursor: pointer;color: green;'
+            >CART</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   {{/each}}
 </script>
 <div class="text-center mt-2">
@@ -53,74 +61,75 @@
 </div>
 <script>
   //사용자 입력 키워드로 책 가져오기
-  let query =$(frm.query).val()
-  let page = 1
+  let query = $(frm.query).val();
+  let page = 1;
 
   //DOM에 대한 접근을 jquery이용
-  //document.getElementById('m_id') -> $(#m_id) 가볍게 작성 가능 
-  //jquery가 표준은 아니지만 다른 라이브러리에서도 호환이 됨. 
+  //document.getElementById('m_id') -> $(#m_id) 가볍게 작성 가능
+  //jquery가 표준은 아니지만 다른 라이브러리에서도 호환이 됨.
   //다음 버튼을 눌렀을 때(#next) 페이지 1씩 증가
-$('#next').on('click',e=>{
-  page++
-  bookList()
-})
-//이전 버튼을 눌렀을 때(#prev) 페이지 1씩 감소
-$('#prev').on('click',e=>{
-  page--
-  bookList()
-})
+  $('#next').on('click', (e) => {
+    page++;
+    bookList();
+  });
+  //이전 버튼을 눌렀을 때(#prev) 페이지 1씩 감소
+  $('#prev').on('click', (e) => {
+    page--;
+    bookList();
+  });
 
   // 도서이미지를 클릭 했을 때 도서 식별자 가져오기
-  $('#list_book').on('click','.card img',() =>{
-  let index = $(this).attr("index")    // this = img태그 <img index=1>
-  console.log(`사용자가 선택한 이미지 index값은 ${index}`);
-  })
-  const bookList =()=>{
+  $('#list_book').on('click', '.card img', () => {
+    let index = $(this).attr('index'); // this = img태그 <img index=1>
+    console.log(`사용자가 선택한 이미지 index값은 ${index}`);
+  });
+
+  //책검색 API 가져오기
+  const bookList = () => {
     console.log(`page = ${page}.query=${query}`);
     $.ajax({
-      type:"GET",
-      url:"https://dapi.kakao.com/v3/search/book?target=title",
-      headers : {Authorization : "KakaoAK bb648d6cb290a85832f449fed6738ea3"},
-      data:{query:query,page:page, size:20},
-      dataType:'JSON',
-      success: function(data){
+      type: 'GET',
+      url: 'https://dapi.kakao.com/v3/search/book?target=title',
+      headers: { Authorization: 'KakaoAK bb648d6cb290a85832f449fed6738ea3' },
+      data: { query: query, page: page, size: 20 },
+      dataType: 'JSON',
+      success: function (data) {
         console.log(data); //[object Objcect] -> JSON.stringify()
-        // 핸들바스 템플릿을 가져오기 
-        const temp = Handlebars.compile($("#temp_book").html())
+        // 핸들바스 템플릿을 가져오기
+        const temp = Handlebars.compile($('#temp_book').html());
         //div 태그 접근(위에서 읽어온 탬플릿 결과(반복문적용 문)를 div태그 내부에 끼워넣기)
         //<div class="row" id="list_book"> </div>위에서 이 자리에 넣을 예정
-        $('#list_book').html(temp(data))
-        //너 마지막 페이지야? 
-        let is_end = data.meta.is_end
+        $('#list_book').html(temp(data));
+        //너 마지막 페이지야?
+        let is_end = data.meta.is_end;
         console.log(`너 마지막 페이지야${is_end}`);
-        let total = data.meta.total_count
+        let total = data.meta.total_count;
         console.log(`검색결과의 총 레코드 수${total}`);
         //총페이지 - total/perpage
-        //마지막페이지수 
-        let last = Math.ceil(total/20)
+        //마지막페이지수
+        let last = Math.ceil(total / 20);
         //바뀐페이지는 어떻게 구하지? 3/10
         //핸들바스로 마임타입을 바꾸기위해 테이블을  {{each documents}}{{/each}}로 감싸서
         //너 첫 번째 페이지야? -> 비활성화
-        if(last===1) $('#preve').attr('disabled',true)
-        else $('#prev').attr('diasabled',false)
-        $('#page').html(`${page}/${last}`)
-        if(is_end) $('#next').attr('disabled',true)
-        else $('#next').attr('diasabled',false)
-
+        if (last === 1) $('#preve').attr('disabled', true);
+        else $('#prev').attr('diasabled', false);
+        $('#page').html(`${page}/${last}`);
+        if (is_end) $('#next').attr('disabled', true);
+        else $('#next').attr('diasabled', false);
       },
-      error:function(error){
+      error: function (error) {
         console.log(error);
-      }    
-    }) //end of 비동기통신 처리
-}//end of bookList()
-bookList(); //디폴트 호출
-// 서브밋 새로고침 방어하기
-// 서브밋이 될 경우, 새로고침 막고, 입력된 값으로 쿼리를 검색해주고, 페이지는 1로 만들고 북리스트를 시작해줌. 
-//val는 jquery가 제공하는 함수
-$(frm).on('submit',e=>{
-  e.preventDefault()
-  query = $(frm.query).val() 
-  page = 1
-  bookList()
-})
+      },
+    }); //end of 비동기통신 처리
+  }; //end of bookList()
+  bookList(); //디폴트 호출
+  // 서브밋 새로고침 방어하기
+  // 서브밋이 될 경우, 새로고침 막고, 입력된 값으로 쿼리를 검색해주고, 페이지는 1로 만들고 북리스트를 시작해줌.
+  //val는 jquery가 제공하는 함수
+  $(frm).on('submit', (e) => {
+    e.preventDefault();
+    query = $(frm.query).val();
+    page = 1;
+    bookList();
+  });
 </script>

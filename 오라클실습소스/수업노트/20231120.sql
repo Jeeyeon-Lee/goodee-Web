@@ -1,4 +1,27 @@
 /* Formatted on 2023/11/20 오후 2:01:39 (QP5 v5.215.12089.38647) */
+CREATE TABLE TEMP (
+ EMP_ID      NUMBER NOT NULL PRIMARY KEY,
+ EMP_NAME    VARCHAR2(10) NOT NULL,
+ BIRTH_DATE  DATE,
+ DEPT_CODE   VARCHAR2(06) NOT NULL,
+ EMP_TYPE    VARCHAR2(04),
+ USE_YN      VARCHAR2(01) NOT NULL,
+ TEL         VARCHAR2(15),
+ HOBBY       VARCHAR2(30),
+ SALARY      NUMBER,
+ LEV         VARCHAR2(04)
+);
+
+CREATE TABLE TDEPT (
+ DEPT_CODE   VARCHAR2(06) NOT NULL PRIMARY KEY,
+ DEPT_NAME   VARCHAR2(20) NOT NULL,
+ PARENT_DEPT VARCHAR2(06) NOT NULL,
+ USE_YN      VARCHAR2(01) NOT NULL,
+ AREA        VARCHAR2(10),
+ BOSS_ID     NUMBER
+);
+
+
 SELECT * FROM temp;
 
 SELECT * FROM tdept;
@@ -92,6 +115,16 @@ SELECT salary/9 FROM temp;
 
 SELECT salary/18 AS "짝수 급여", salary*2/18 AS "홀수 달 급여" FROM temp;
 
+--1-1월급여 오름, 내림차순으로 정렬
+SELECT to_char((salary), '999,999,999')||'원' AS "sal(ASC)" 
+FROM temp 
+ORDER BY salary ASC;
+
+SELECT to_char((salary), '999,999,999')||'원' AS "sal(DESC)" 
+FROM temp 
+ORDER BY salary desc;
+
+
 --2.위에서 구한 월 급여에 교통비가 10만원씩 지급된다면(짝수달은 20만원)위의 문장이
 --어떻게 바뀔지 작성해 보시오.
 
@@ -107,9 +140,9 @@ FROM dual;
 
 SELECT round(12345.6789,1), round(12345.6789,-1), round(12345.6789,0) FROM dual;
 
---3.TEMP 테이블에서 취미가 NULL 이 아닌 사람의 성명을 읽어오시오.
-SELECT emp_name, hobby  
-FROM temp
+--3.TEMP 테이블에서 취미가 NULL 이 아닌 사람의 성명을 읽어오시오. -> 4개
+SELECT emp_name, hobby 
+FROM temp 
 WHERE hobby IS NOT NULL;
 
 SELECT emp_name, hobby
@@ -118,6 +151,24 @@ MINUS
 SELECT emp_name, hobby
 FROM temp
 WHERE hobby IS NULL;
+
+--3-0  -> 6개
+SELECT emp_name, hobby
+FROM temp
+WHERE hobby IS NULL;
+
+SELECT emp_name,hobby FROM temp WHERE hobby IS NULL
+UNION ALL 
+SELECT emp_name,hobby FROM temp WHERE hobby IS NOT NULL;
+
+SELECT emp_name,hobby FROM temp WHERE hobby IS NULL
+UNION 
+SELECT emp_name,hobby FROM temp WHERE hobby IS NOT NULL;
+
+SELECT emp_name,hobby FROM temp WHERE hobby IS NOT NULL
+MINUS
+SELECT emp_name,hobby FROM temp WHERE hobby = '등산'
+ORDER BY emp_name ASC;
 
 --3-1.등산이나 낚시 취미를 가진 직원 이름 가져오기 in 구문 사용하기 
 SELECT emp_name, hobby  
@@ -183,7 +234,7 @@ WHERE nvl(hobby,'등산') = '등산';
 --DISPLAY되도록 COLUMN ALLIAS를 부여하여 SELECT 하시오.
 
 
-SELECT emp_id AS "사번", emp_name AS "성명"
+SELECT to_char(emp_id)||'번' AS "사번", emp_name AS "성명"
 FROM temp;
 
 --7.TEMP의 자료를 직급 명(LEV)에 ASCENDING(오름)하면서 결과내에서 다시 사번(EMP_NAME) 순으로
