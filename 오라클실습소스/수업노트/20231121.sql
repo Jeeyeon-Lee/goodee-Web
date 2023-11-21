@@ -49,6 +49,8 @@ FROM emp
 GROUP BY deptno
 ORDER BY 평균급여 desc;
 
+
+
 SELECT 
     deptno AS "부서번호", 
     to_char(round(avg(sal)),'9,999')||'만원' AS "평균급여"
@@ -114,9 +116,36 @@ WHERE mod(seq_vc,2) =0;
 SELECT mod(seq_vc,2), WORDS_VC FROM T_LETITBE 
 WHERE mod(seq_vc,2) =1;
 
+SELECT
+                eng_words
+  FROM (
+                SELECT
+                            DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
+                  FROM t_letitbe  
+             );
+             
+SELECT
+                num, eng_words
+  FROM (
+                SELECT MOD(seq_vc,2) num
+                            ,DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
+                  FROM t_letitbe  
+             )
+WHERE num = 1;
+
+
 --2. 한글가사만 나와
 SELECT mod(seq_vc,2), WORDS_VC FROM T_LETITBE 
 WHERE mod(seq_vc,2) =0;
+
+SELECT
+                num, eng_words
+  FROM (
+                SELECT MOD(seq_vc,2) num
+                            ,DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
+                  FROM t_letitbe  
+             )
+WHERE num = 1;
 
 --3.영문가사와 한글가사 모두 나오게 하기 
 SELECT to_number(seq_vc) , WORDS_VC FROM T_LETITBE 
@@ -124,6 +153,8 @@ WHERE mod(seq_vc,2) =1
 UNION
 SELECT to_number(seq_vc), WORDS_VC FROM T_LETITBE 
 WHERE mod(seq_vc,2) =0;
+
+
 
 
 --1. 영화 티켓을 받을 수 있는 사람의 명단과 현재 가지고 있는 포인트, 영화 티켓의 포인트
@@ -228,14 +259,153 @@ FROM lecture ;
  --3-1.lec_time이 크면 '실험과목, lec_point가 크면 '기타과목',
  --같으면 '일반과목'으로 돌려받기 
  
- SELECT decode(sign(lec_time-lec_point),1,'기타과목','일반과목') AS "구분"
+ SELECT decode(sign(lec_time-lec_point),1,'기타과목',0,'일반과목',-1,'실험과목') AS "구분"
  FROM lecture;
  
- --월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고, 
+ --3-2. 강의시간 = 학점 , '일반과목' & 정렬
+ 
+ SELECT lec_id,decode(lec_time,lec_point,'일반과목', NULL) AS "과목"
+ FROM lecture
+ORDER BY lec_id;
+ 
+ SELECT 
+        lec_id,decode(lec_time,lec_point,'일반과목', NULL) AS "과목"
+ FROM lecture
+ORDER BY decode(lec_time,lec_point,'일반과목', NULL) ASC;
+
+ --인센티브 많이 받는 사원 순
+ SELECT comm
+ FROM emp
+ WHERE comm IS NOT NULL
+ ORDER BY comm desc;
+
+-- 널이 있는 경우에는 널값이 제일 위로 올라옴.
+SELECT comm
+ FROM emp
+ ORDER BY comm desc;
+
+ 
+--(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고, 
 --화요일엔 11, 수요일엔 21, 목요일엔, 31, 금요일엔 41, 토요일엔 51,
 --일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때 
 --암호를 SELECT하는 SQL을 만들어 보시오.
 
-SELECT sysdate AS "날짜", To_char(sysdate,'DD')
+--어제, 오늘, 내일 but 자주 사용x 왜?? UI 받아오는 값이 대부분이고, 그 값이 대부분 문자열임 
+SELECT sysdate-1, sysdate, sysdate+1 FROM dual;
+
+SELECT 
+    sysdate AS "오늘"
+    ,to_char(sysdate,'DD') AS "날짜"
+    ,to_char(sysdate, 'day') AS "요일"
 FROM dual;
 
+--(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고, 
+--화요일엔 11, 수요일엔 21, 목요일엔, 31, 금요일엔 41, 토요일엔 51,
+--일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때 
+--암호를 SELECT하는 SQL을 만들어 보시오.
+
+SELECT 
+    decode(to_char(sysdate, 'day')
+        ,'월요일','01'
+        ,'화요일','11'
+        ,'수요일','21'
+        ,'목요일','31'
+        ,'금요일','41'
+        ,'토요일','51'
+        ,'일요일','61')
+        ||
+        to_char(sysdate,'DD') AS "생성 암호"
+FROM dual;
+
+
+--실전문제
+--문제 : 사원테이블에서 job이 clerk인 사람의 급여 합,  salesman인 사람의
+--급여의 합을 구하고 나머지 job에 대해서는 기타 합으로 구하시오.
+
+SELECT JOB,to_char(sum(sal),'9,999')||'원' AS "총급여"
+FROM emp
+GROUP BY JOB;
+
+SELECT decode(JOB,'clerk',sal,NULL)
+FROM emp;
+
+
+SELECT decode(JOB,'CLERK',sal,NULL)
+         ,decode(JOB,'SALESMAN',sal,NULL)
+         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal)
+FROM emp;
+
+
+SELECT JOB, decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) AS "합"
+FROM emp;
+
+
+SELECT JOB, to_char(sum(sal),'9,999')||'원'
+FROM emp, (SELECT decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) FROM emp)
+GROUP BY JOB; 
+
+SELECT JOB, sum(sal)
+FROM emp, (SELECT decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) FROM emp)
+GROUP BY JOB; 
+
+        
+SELECT sum(decode(JOB,'CLERK',sal)) 
+FROM emp;
+
+
+SELECT dname
+         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
+         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
+         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
+FROM emp, dept;
+
+
+SELECT DISTINCT dname
+         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
+         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
+         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
+FROM emp, dept
+WHERE emp.deptno=dept.deptno;
+
+SELECT DISTINCT dname, CLERK, MANAGER, ETC    
+FROM (SELECT dname
+         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
+         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
+         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
+         FROM emp, dept
+         WHERE emp.deptno=dept.deptno
+         )
+ORDER BY dname;
+
+
+--empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다. 
+SELECT max(empno),
+    count(decode(JOB,'CLERK',sal,NULL))
+    ,sum(decode(JOB,'CLERK',sal,NULL))
+    ,count(decode(JOB,'SALESMAN',sal,NULL))
+     ,sum(decode(JOB,'SALESMAN',sal,NULL))
+FROM emp;
+
+
+--empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다. 
+SELECT 
+    sum(decode(JOB,'CLERK',sal,NULL))
+    ,sum(decode(JOB,'SALESMAN',sal,NULL))
+    ,sum(decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal)) etc_sal 
+    ,sum(sal)
+
+FROM emp;
+
+--한번 읽고 처리하도록 
+
+--emp 테이블 사원이름을 한 행에 사번, 성명을 세 명씩 보여주는 쿼리문을 작성하시오.
+
+--사전학습문제
+--각 행에 1학년부터 4학년까지 분리 한 행에 하나의 학년만 나오도록 (6장-06-002)
+--현재는 로우에 학년별 정원 -> 컬럼으로 학년별 정원이 나오도록 변환 
+--12개 학과, 4학년 카타시안 곱 사용 & decode 사용 ??? 
+
+SELECT * FROM test11;
+
+
+--max, min줘도 영향이 없는 건 A컬럼에 대해 문법적 문제를 해결하는 용도로 사용되었기 때문이다. 
