@@ -1,4 +1,4 @@
-/* Formatted on 2023/11/21 오전 10:14:23 (QP5 v5.215.12089.38647) */
+/* Formatted on 2023/11/21 오후 8:10:20 (QP5 v5.215.12089.38647) */
 SELECT empno, sal
   FROM (SELECT empno, ename
           FROM emp
@@ -42,118 +42,75 @@ SELECT 사번, 성명
 ORDER BY lev ASC, emp_name DESC;
 
 --8. 부서별 급여 평균을 구하시오
-SELECT 
-    deptno AS "부서번호", 
-    to_char(round(avg(sal)),'9,999')||'만원' AS "평균급여"
-FROM emp
+
+  SELECT deptno AS "부서번호",
+         TO_CHAR (ROUND (AVG (sal)), '9,999') || '만원' AS "평균급여"
+    FROM emp
 GROUP BY deptno
-ORDER BY 평균급여 desc;
+ORDER BY 평균급여 DESC;
 
 
 
-SELECT 
-    deptno AS "부서번호", 
-    to_char(round(avg(sal)),'9,999')||'만원' AS "평균급여"
-FROM emp
+  SELECT deptno AS "부서번호",
+         TO_CHAR (ROUND (AVG (sal)), '9,999') || '만원' AS "평균급여"
+    FROM emp
 GROUP BY deptno
-HAVING avg(sal)>2000
-ORDER BY 평균급여 desc;
+  HAVING AVG (sal) > 2000
+ORDER BY 평균급여 DESC;
 
-CREATE TABLE T_LETITBE
-(
-SEQ_VC VARCHAR2(2),
-WORDS_VC VARCHAR2(100)
-)
-/
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (1,'Let it be');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (2,'내버려 두어라');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (3,'When I find myself in times of trouble');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (4,'내가 괴로움의 시간에서 방황할 때면 ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (5,'Mother Mary comes to me Speaking words of wisdom,');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (6,'어머니는 내게 다가와 현명한 말씀을 해주신다. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (7,'Let it be ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (8,'내버려 두어라.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (9,'And in my hour of darkness ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (10,'그리고 내가 어둠속에 헤매일 때, ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (11,'She is standing right in front of me Speaking words of wisdom,');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (12,'그녀는 내 바로 앞에서, 현명한 말씀을 해주신다. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (13,'Let it be. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (14,'내버려 두어라.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (15,'And when the broken hearted people Living in the world agree, There will be an answer, ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (16,'이 세상의 상처받은 사람들은 이 말씀이 방법이 될 거라 믿는다. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (17,'Let it be ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (18,'내버려 두어라.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (19,'For though they may be parted ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (20,'그들이 헤어지더라도 여전히 그들이 만날 기회는 있을것이다. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (21,'There is still a chance that they will see, There will be an answer,');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (22,'방법은 있을 것이다.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (23,'let it be ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (24,'내버려 두어라.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (25,'And the night is cloudy, there is still a light that shines on me.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (26,'구름이 낀 밤에도, 아직 날 비추어주는 빛이 있어. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (27,'Shine until tomorrow, let it be.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (28,'희망은 계속될 것이다.내버려 두어라. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (29,'I wake up to the sound of music,');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (30,'음악 소리에 난 깨어나고, ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (31,'Mother Mary comes to me,Speaking words of whisdom,');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (32,'어머니 메어리는 내게 다가와,현명한 말씀을 해 주신다. ');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (33,'Let it be.');
-INSERT INTO T_LETITBE (SEQ_VC,WORDS_VC) VALUES (34,'내버려 두어라. ');
-COMMIT;
+SELECT * FROM t_letitbe;
 
-SELECT*FROM t_letitbe;
 --Mod?
 
 --홀수의 집합
-SELECT mod(seq_vc,2) FROM t_letitbe
-WHERE mod(seq_vc,2) =1;
+
+SELECT MOD (seq_vc, 2)
+  FROM t_letitbe
+ WHERE MOD (seq_vc, 2) = 1;
 
 --짝수의 집합
-SELECT mod(seq_vc,2) FROM t_letitbe
-WHERE mod(seq_vc,2) =0;
+
+SELECT MOD (seq_vc, 2)
+  FROM t_letitbe
+ WHERE MOD (seq_vc, 2) = 0;
 
 --1. 영어가사만 나와
-SELECT mod(seq_vc,2), WORDS_VC FROM T_LETITBE 
-WHERE mod(seq_vc,2) =1;
 
-SELECT
-                eng_words
-  FROM (
-                SELECT
-                            DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
-                  FROM t_letitbe  
-             );
-             
-SELECT
-                num, eng_words
-  FROM (
-                SELECT MOD(seq_vc,2) num
-                            ,DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
-                  FROM t_letitbe  
-             )
-WHERE num = 1;
+SELECT MOD (seq_vc, 2), WORDS_VC
+  FROM T_LETITBE
+ WHERE MOD (seq_vc, 2) = 1;
+
+SELECT eng_words
+  FROM (SELECT DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words FROM t_letitbe);
+
+SELECT num, eng_words
+  FROM (SELECT MOD (seq_vc, 2) num,
+               DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words
+          FROM t_letitbe)
+ WHERE num = 1;
 
 
 --2. 한글가사만 나와
-SELECT mod(seq_vc,2), WORDS_VC FROM T_LETITBE 
-WHERE mod(seq_vc,2) =0;
 
-SELECT
-                num, eng_words
-  FROM (
-                SELECT MOD(seq_vc,2) num
-                            ,DECODE(MOD(seq_vc,2),1,  words_vc) eng_words
-                  FROM t_letitbe  
-             )
-WHERE num = 1;
+SELECT MOD (seq_vc, 2), WORDS_VC
+  FROM T_LETITBE
+ WHERE MOD (seq_vc, 2) = 0;
 
---3.영문가사와 한글가사 모두 나오게 하기 
-SELECT to_number(seq_vc) , WORDS_VC FROM T_LETITBE 
-WHERE mod(seq_vc,2) =1
+SELECT num, eng_words
+  FROM (SELECT MOD (seq_vc, 2) num,
+               DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words
+          FROM t_letitbe)
+ WHERE num = 1;
+
+--3.영문가사와 한글가사 모두 나오게 하기
+
+SELECT TO_NUMBER (seq_vc), WORDS_VC
+  FROM T_LETITBE
+ WHERE MOD (seq_vc, 2) = 1
 UNION
-SELECT to_number(seq_vc), WORDS_VC FROM T_LETITBE 
-WHERE mod(seq_vc,2) =0;
-
+SELECT TO_NUMBER (seq_vc), WORDS_VC
+  FROM T_LETITBE
+ WHERE MOD (seq_vc, 2) = 0;
 
 
 
@@ -169,243 +126,286 @@ SELECT * FROM t_giftpoint;
 --where 조건식 : 보유포인트 > 영화티켓 포인트
 
 --from절에 들어갈 인라인 뷰 작성 -> 대상 줄여서 속도 향상
+
 SELECT point_nu
-FROM t_giftpoint
-WHERE name_vc = '영화티켓';
+  FROM t_giftpoint
+ WHERE name_vc = '영화티켓';
 
-SELECT * 
-FROM t_giftmem mem,
-    (
-    SELECT point_nu
-    FROM t_giftpoint
-    WHERE name_vc = '영화티켓'
-    ) poi;
-    
-SELECT name_vc AS "회원이름",mem.point_nu-poi.point_nu AS "잔여포인트" 
-FROM t_giftmem mem,
-    (
-    SELECT point_nu
-    FROM t_giftpoint
-    WHERE name_vc = '영화티켓'
-    ) poi
-WHERE mem.point_nu-poi.point_nu>0;  
+SELECT *
+  FROM t_giftmem mem,
+       (SELECT point_nu
+          FROM t_giftpoint
+         WHERE name_vc = '영화티켓') poi;
+
+SELECT name_vc AS "회원이름",
+       mem.point_nu - poi.point_nu AS "잔여포인트"
+  FROM t_giftmem mem,
+       (SELECT point_nu
+          FROM t_giftpoint
+         WHERE name_vc = '영화티켓') poi
+ WHERE mem.point_nu - poi.point_nu > 0;
 
 
-SELECT name_vc AS "회원이름",mem.point_nu-poi.point_nu AS "잔여포인트" 
-FROM t_giftmem mem,
-    (
-    SELECT point_nu
-    FROM t_giftpoint
-    WHERE name_vc = '영화티켓'
-    ) poi
-WHERE mem.point_nu>=poi.point_nu;
+SELECT name_vc AS "회원이름",
+       mem.point_nu - poi.point_nu AS "잔여포인트"
+  FROM t_giftmem mem,
+       (SELECT point_nu
+          FROM t_giftpoint
+         WHERE name_vc = '영화티켓') poi
+ WHERE mem.point_nu >= poi.point_nu;
 
---2.김유신씨가 보유하고 있는 마일리지 포인트로 얻을 수 있는 상품 중 
+--2.김유신씨가 보유하고 있는 마일리지 포인트로 얻을 수 있는 상품 중
 --가장 포인트가 높은 것은 무엇인가?
 
 --김유신 포인트 가져오기
+
 SELECT mem.NAME_vc AS "이름", mem.point_nu AS "포인트"
-FROM
-    t_giftmem mem  
-WHERE mem.Name_vc = '김유신';
+  FROM t_giftmem mem
+ WHERE mem.Name_vc = '김유신';
 
 --가장 포인트 높은 상품
-SELECT max(poi.point_nu)
-FROM t_giftpoint poi
-WHERE point_nu<=50012;
+
+SELECT MAX (poi.point_nu)
+  FROM t_giftpoint poi
+ WHERE point_nu <= 50012;
 
 --두 개 같이
+
 SELECT poi.name_vc AS "상품"
-FROM
-    t_giftpoint poi  
-WHERE point_nu = (
-    SELECT max(poi.point_nu)
-    FROM t_giftpoint poi
-    WHERE point_nu<=50012
-    );
+  FROM t_giftpoint poi
+ WHERE point_nu = (SELECT MAX (poi.point_nu)
+                     FROM t_giftpoint poi
+                    WHERE point_nu <= 50012);
 
 --decode 실습
-SELECT decode(1,1,'t'),    --t
-            decode(1,2,'t','f')  --f
- FROM dual;
- 
- --학점, 시수가 같은 경우, 일반과목을 돌려받기
-SELECT lec_id, lec_time, lec_point, decode(lec_time,lec_point,'일반과목','다름')
-FROM lecture;
 
-SELECT lec_id, decode(lec_time,lec_point,'일반과목',NULL)
-FROM lecture;
+SELECT DECODE (1, 1, 't'),                                                 --t
+                          DECODE (1, 2, 't', 'f')                          --f
+                                                 FROM DUAL;
+
+ --학점, 시수가 같은 경우, 일반과목을 돌려받기
+
+SELECT lec_id,
+       lec_time,
+       lec_point,
+       DECODE (lec_time, lec_point, '일반과목', '다름')
+  FROM lecture;
+
+SELECT lec_id, DECODE (lec_time, lec_point, '일반과목', NULL)
+  FROM lecture;
 
 --2. 주당 강의 시간과 학점이 같은 강좌의 숫자를 알고 싶음. (decode 사용)
-SELECT count(decode(lec_time,lec_point,1)) AS "강좌의 수"
-FROM lecture ;
-    
+
+SELECT COUNT (DECODE (lec_time, lec_point, 1)) AS "강좌의 수"
+  FROM lecture;
+
  --3.강의시간과 학점이 같거나 강의시간<학점 '일반과목',
  --강의시간>학점 '실험과목',
- 
- SELECT decode(lec_time-lec_point,1,'실험과목','일반과목') AS "구분"
- FROM lecture;
- 
- 
- SELECT 
-        lec_id,
-        decode(lec_time,lec_point,'일반과목') AS "구분1",  
-        decode(sign(lec_time-lec_point),1,'실험과목') AS "구분2", 
-        decode(sign(lec_time-lec_point),-1,'일반과목') AS "구분3"
- FROM lecture;
 
- 
- 
+SELECT DECODE (lec_time - lec_point, 1, '실험과목', '일반과목')
+          AS "구분"
+  FROM lecture;
+
+
+SELECT lec_id,
+       DECODE (lec_time, lec_point, '일반과목') AS "구분1",
+       DECODE (SIGN (lec_time - lec_point), 1, '실험과목') AS "구분2",
+       DECODE (SIGN (lec_time - lec_point), -1, '일반과목') AS "구분3"
+  FROM lecture;
+
+
+
  --3-1.lec_time이 크면 '실험과목, lec_point가 크면 '기타과목',
- --같으면 '일반과목'으로 돌려받기 
- 
- SELECT decode(sign(lec_time-lec_point),1,'기타과목',0,'일반과목',-1,'실험과목') AS "구분"
- FROM lecture;
- 
+ --같으면 '일반과목'으로 돌려받기
+
+SELECT DECODE (SIGN (lec_time - lec_point),
+               1, '기타과목',
+               0, '일반과목',
+               -1, '실험과목')
+          AS "구분"
+  FROM lecture;
+
  --3-2. 강의시간 = 학점 , '일반과목' & 정렬
- 
- SELECT lec_id,decode(lec_time,lec_point,'일반과목', NULL) AS "과목"
- FROM lecture
+
+  SELECT lec_id, DECODE (lec_time, lec_point, '일반과목', NULL) AS "과목"
+    FROM lecture
 ORDER BY lec_id;
- 
- SELECT 
-        lec_id,decode(lec_time,lec_point,'일반과목', NULL) AS "과목"
- FROM lecture
-ORDER BY decode(lec_time,lec_point,'일반과목', NULL) ASC;
+
+  SELECT lec_id, DECODE (lec_time, lec_point, '일반과목', NULL) AS "과목"
+    FROM lecture
+ORDER BY DECODE (lec_time, lec_point, '일반과목', NULL) ASC;
 
  --인센티브 많이 받는 사원 순
- SELECT comm
- FROM emp
- WHERE comm IS NOT NULL
- ORDER BY comm desc;
+
+  SELECT comm
+    FROM emp
+   WHERE comm IS NOT NULL
+ORDER BY comm DESC;
 
 -- 널이 있는 경우에는 널값이 제일 위로 올라옴.
-SELECT comm
- FROM emp
- ORDER BY comm desc;
 
- 
---(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고, 
+  SELECT comm
+    FROM emp
+ORDER BY comm DESC;
+
+
+--(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고,
 --화요일엔 11, 수요일엔 21, 목요일엔, 31, 금요일엔 41, 토요일엔 51,
---일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때 
+--일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때
 --암호를 SELECT하는 SQL을 만들어 보시오.
 
---어제, 오늘, 내일 but 자주 사용x 왜?? UI 받아오는 값이 대부분이고, 그 값이 대부분 문자열임 
-SELECT sysdate-1, sysdate, sysdate+1 FROM dual;
+--어제, 오늘, 내일 but 자주 사용x 왜?? UI 받아오는 값이 대부분이고, 그 값이 대부분 문자열임
 
-SELECT 
-    sysdate AS "오늘"
-    ,to_char(sysdate,'DD') AS "날짜"
-    ,to_char(sysdate, 'day') AS "요일"
-FROM dual;
+SELECT SYSDATE - 1, SYSDATE, SYSDATE + 1 FROM DUAL;
 
---(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고, 
+SELECT SYSDATE AS "오늘",
+       TO_CHAR (SYSDATE, 'DD') AS "날짜",
+       TO_CHAR (SYSDATE, 'day') AS "요일"
+  FROM DUAL;
+
+--(if문 decode) 월요일엔 해당일자에 01을 붙여서 4자리 암호를 만들고,
 --화요일엔 11, 수요일엔 21, 목요일엔, 31, 금요일엔 41, 토요일엔 51,
---일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때 
+--일요일엔 61을 붙여서 4자리 암호를 만든다고 할 때
 --암호를 SELECT하는 SQL을 만들어 보시오.
 
-SELECT 
-    decode(to_char(sysdate, 'day')
-        ,'월요일','01'
-        ,'화요일','11'
-        ,'수요일','21'
-        ,'목요일','31'
-        ,'금요일','41'
-        ,'토요일','51'
-        ,'일요일','61')
-        ||
-        to_char(sysdate,'DD') AS "생성 암호"
-FROM dual;
+SELECT    DECODE (TO_CHAR (SYSDATE, 'day'),
+                  '월요일', '01',
+                  '화요일', '11',
+                  '수요일', '21',
+                  '목요일', '31',
+                  '금요일', '41',
+                  '토요일', '51',
+                  '일요일', '61')
+       || TO_CHAR (SYSDATE, 'DD')
+          AS "생성 암호"
+  FROM DUAL;
 
 
 --실전문제
 --문제 : 사원테이블에서 job이 clerk인 사람의 급여 합,  salesman인 사람의
 --급여의 합을 구하고 나머지 job에 대해서는 기타 합으로 구하시오.
 
-SELECT JOB,to_char(sum(sal),'9,999')||'원' AS "총급여"
-FROM emp
+  SELECT JOB, TO_CHAR (SUM (sal), '9,999') || '원' AS "총급여"
+    FROM emp
 GROUP BY JOB;
 
-SELECT decode(JOB,'clerk',sal,NULL)
-FROM emp;
+SELECT DECODE (JOB, 'clerk', sal, NULL) FROM emp;
 
 
-SELECT decode(JOB,'CLERK',sal,NULL)
-         ,decode(JOB,'SALESMAN',sal,NULL)
-         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal)
-FROM emp;
+SELECT DECODE (JOB, 'CLERK', sal, NULL),
+       DECODE (JOB, 'SALESMAN', sal, NULL),
+       DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL,  sal)
+  FROM emp;
 
 
-SELECT JOB, decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) AS "합"
-FROM emp;
+SELECT JOB, DECODE (JOB,  'CLERK', sal,  'SALESMAN', sal,  sal) AS "합"
+  FROM emp;
 
 
-SELECT JOB, to_char(sum(sal),'9,999')||'원'
-FROM emp, (SELECT decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) FROM emp)
-GROUP BY JOB; 
+  SELECT JOB, TO_CHAR (SUM (sal), '9,999') || '원'
+    FROM emp,
+         (SELECT DECODE (JOB,  'CLERK', sal,  'SALESMAN', sal,  sal) FROM emp)
+GROUP BY JOB;
 
-SELECT JOB, sum(sal)
-FROM emp, (SELECT decode(JOB,'CLERK',sal,'SALESMAN',sal,sal) FROM emp)
-GROUP BY JOB; 
-
-        
-SELECT sum(decode(JOB,'CLERK',sal)) 
-FROM emp;
+  SELECT JOB, SUM (sal)
+    FROM emp,
+         (SELECT DECODE (JOB,  'CLERK', sal,  'SALESMAN', sal,  sal) FROM emp)
+GROUP BY JOB;
 
 
-SELECT dname
-         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
-         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
-         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
-FROM emp, dept;
+SELECT SUM (DECODE (JOB, 'CLERK', sal)) FROM emp;
 
 
-SELECT DISTINCT dname
-         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
-         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
-         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
-FROM emp, dept
-WHERE emp.deptno=dept.deptno;
+SELECT dname,
+       DECODE (JOB, 'CLERK', sal, NULL) AS "CLERK",
+       DECODE (JOB, 'MANAGER', sal, NULL) AS "MANAGER",
+       DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL,  sal) AS "ETC"
+  FROM emp, dept;
 
-SELECT DISTINCT dname, CLERK, MANAGER, ETC    
-FROM (SELECT dname
-         ,decode(JOB,'CLERK',sal,NULL) AS "CLERK"
-         ,decode(JOB,'MANAGER',sal,NULL) AS "MANAGER"
-         ,decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal) AS "ETC"
-         FROM emp, dept
-         WHERE emp.deptno=dept.deptno
-         )
+
+SELECT DISTINCT
+       dname,
+       DECODE (JOB, 'CLERK', sal, NULL) AS "CLERK",
+       DECODE (JOB, 'MANAGER', sal, NULL) AS "MANAGER",
+       DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL,  sal) AS "ETC"
+  FROM emp, dept
+ WHERE emp.deptno = dept.deptno;
+
+  SELECT DISTINCT dname,
+                  CLERK,
+                  MANAGER,
+                  ETC
+    FROM (SELECT dname,
+                 DECODE (JOB, 'CLERK', sal, NULL) AS "CLERK",
+                 DECODE (JOB, 'MANAGER', sal, NULL) AS "MANAGER",
+                 DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL,  sal) AS "ETC"
+            FROM emp, dept
+           WHERE emp.deptno = dept.deptno)
 ORDER BY dname;
 
 
---empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다. 
-SELECT max(empno),
-    count(decode(JOB,'CLERK',sal,NULL))
-    ,sum(decode(JOB,'CLERK',sal,NULL))
-    ,count(decode(JOB,'SALESMAN',sal,NULL))
-     ,sum(decode(JOB,'SALESMAN',sal,NULL))
-FROM emp;
+--empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다.
+
+SELECT MAX (empno),
+       COUNT (DECODE (JOB, 'CLERK', sal, NULL)),
+       SUM (DECODE (JOB, 'CLERK', sal, NULL)),
+       COUNT (DECODE (JOB, 'SALESMAN', sal, NULL)),
+       SUM (DECODE (JOB, 'SALESMAN', sal, NULL))
+  FROM emp;
 
 
---empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다. 
-SELECT 
-    sum(decode(JOB,'CLERK',sal,NULL))
-    ,sum(decode(JOB,'SALESMAN',sal,NULL))
-    ,sum(decode(JOB,'CLERK',NULL,'SALESMAN',NULL,sal)) etc_sal 
-    ,sum(sal)
+--empno 에 max 를 씌운 것은 문법적 문제를 해결하기 위해서일 뿐이다.
 
-FROM emp;
+SELECT SUM (DECODE (JOB, 'CLERK', sal, NULL)),
+       SUM (DECODE (JOB, 'SALESMAN', sal, NULL)),
+       SUM (DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL,  sal)) etc_sal,
+       SUM (sal)
+  FROM emp;
 
---한번 읽고 처리하도록 
+--한번 읽고 처리하도록
 
 --emp 테이블 사원이름을 한 행에 사번, 성명을 세 명씩 보여주는 쿼리문을 작성하시오.
 
 --사전학습문제
 --각 행에 1학년부터 4학년까지 분리 한 행에 하나의 학년만 나오도록 (6장-06-002)
---현재는 로우에 학년별 정원 -> 컬럼으로 학년별 정원이 나오도록 변환 
---12개 학과, 4학년 카타시안 곱 사용 & decode 사용 ??? 
+--현재는 로우에 학년별 정원 -> 컬럼으로 학년별 정원이 나오도록 변환
+--12개 학과, 4학년 카타시안 곱 사용 & decode 사용 ???
 
 SELECT * FROM test11;
 
 
---max, min줘도 영향이 없는 건 A컬럼에 대해 문법적 문제를 해결하는 용도로 사용되었기 때문이다. 
+--max, min줘도 영향이 없는 건 A컬럼에 대해 문법적 문제를 해결하는 용도로 사용되었기 때문이다.
+
+SELECT A.dept,
+       b.rno AS "학년",
+       DECODE (b.rno,  1, A.fre,  2, A.sup,  3, A.jun,  4, A.sen)
+          AS "정원수"
+  FROM (SELECT dept,
+               fre,
+               sup,
+               jun,
+               sen
+          FROM test11
+         WHERE dept = '항공우주공학과') A,
+       (SELECT ROWNUM rno
+          FROM dept
+         WHERE ROWNUM <= 4) b;
+
+SELECT DECODE (MOD (seq_vc, 2), 1, words_vc, '0') eng_words FROM t_letitbe;
+
+SELECT dname FROM emp;
+
+SELECT DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words
+  FROM t_letitbe
+ WHERE eng_words = 1;
+
+ 별칭을 굳이 조건절에서 사용하고 싶다면 인라인뷰를 사용하시오.
+
+SELECT eng_words
+  FROM (SELECT DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words FROM t_letitbe);
+
+SELECT num, eng_words
+  FROM (SELECT MOD (seq_vc, 2) num,
+               DECODE (MOD (seq_vc, 2), 1, words_vc) eng_words
+          FROM t_letitbe)
+ WHERE num = 1;
