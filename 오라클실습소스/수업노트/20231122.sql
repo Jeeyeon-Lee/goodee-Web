@@ -238,10 +238,302 @@ GROUP BY indate_vc;
 SELECT indate_vc AS "판매날짜" FROM t_orderbasket,
 (SELECT ROWNUM rno FROM dept WHERE ROWNUM <3);
 
+
+SELECT decode(b.rno,1,indate_vc,2,'총계') AS "판매날짜"
+FROM t_orderbasket,
+        (SELECT ROWNUM rno 
+        FROM dept 
+        WHERE ROWNUM <3) b
+        GROUP BY decode(b.rno,1,indate_vc,2,'총계')
+ORDER BY 판매날짜;
+
 SELECT decode(b.rno,1,indate_vc,2,'총계') AS "판매날짜" 
+FROM t_orderbasket,
+        (SELECT  
+            ROWNUM rno 
+            FROM dept 
+            WHERE ROWNUM <3)b
+            ,
+GROUP BY decode(b.rno,1,indate_vc,2,'총계')
+ORDER BY 판매날짜;
+
+
+SELECT decode(b.rno,1,indate_vc,2,'총계') AS "판매날짜"
+          ,to_char(sum(qty_nu)||'개') AS "판매개수"
+          ,to_char(sum(qty_nu*price_nu)||' 원')AS "판매가격"
 FROM t_orderbasket,
         (SELECT ROWNUM rno 
         FROM dept 
         WHERE ROWNUM <3)b
-GROUP BY decode(b.rno,1,indate_vc,2,'총계')
+        GROUP BY decode(b.rno,1,indate_vc,2,'총계')
 ORDER BY 판매날짜;
+
+--
+SELECT sum(price_nu*qty_nu) AS "판매총액"
+FROM t_orderbasket;
+
+
+--날짜별로 GROUP BY
+SELECT deptno
+FROM emp
+GROUP BY deptno;
+
+SELECT indate_vc AS "판매날짜", sum(qty_nu) AS "판매수량", sum(price_nu*qty_nu) AS "판매총액"
+FROM t_orderbasket
+GROUP BY indate_vc;
+
+SELECT decode(JOB,'CLERK',sal),decode(JOB,'SALESMAN',sal), decode(JOB, 'CLERK',NULL,'SALESMAN',NULL,'ETC')
+
+
+--날짜별 판매개수, 판매가격 
+--맨 아래 로우에 '총계'추가
+SELECT decode(A.rno,1,indate_vc,2,'총계') AS "판매날짜"
+          ,to_char(sum(qty_nu)||'개') AS "판매개수"
+          ,to_char(sum(qty_nu*price_nu)||' 원')AS "판매가격"
+FROM t_orderbasket,
+        (
+        SELECT 1 rno FROM dual
+        UNION ALL
+        SELECT 2 FROM dual
+        )A
+        GROUP BY decode(A.rno,1,indate_vc,2,'총계')
+        ORDER BY decode(A.rno,1,indate_vc,2,'총계');
+
+
+
+--3일 동안 매출의 합
+SELECT sum(A.총계) AS "총계"
+FROM(
+        SELECT sum(price_nu*qty_nu) AS "총계"
+        FROM t_orderbasket
+        GROUP BY indate_vc
+        )A;
+
+--다음버전 문제 
+
+
+-- case...when구분을 활용할것
+--member1테이블을 이용하여 아이디가 존재하지 않으면 -1을 반환하고
+--아이디가 존재하면 비번까지 비교하여 같으면 1을 반환하고
+--다르면 0을 반환하는 select문을 작성하시오.
+
+--=:와 같이 쿠키와 세션에 담는다?? 
+SELECT m_name
+FROM member1
+WHERE m_id =:ID
+AND m_pw=:pw;
+
+edit member1;
+
+SELECT CASE WHEN m_id =:ID THEN 0 END FROM member1;
+
+
+SELECT CASE WHEN m_id =:ID THEN 0 END FROM member1
+WHERE ROWNUM =1;
+
+SELECT CASE WHEN m_id =:ID THEN 0
+              ELSE -1
+              END
+   FROM member1
+WHERE ROWNUM =1;
+
+
+SELECT m_ID, ROWNUM
+FROM member1;
+
+SELECT result
+FROM(
+        SELECT CASE WHEN m_id =:ID THEN 
+            CASE WHEN m_pw =:pw THEN 1 
+            ELSE 0 
+            END                 
+          ELSE -1 
+          END AS result
+        FROM member1
+        ORDER BY result desc
+        )
+WHERE ROWNUM =1;
+
+--1번은 날짜별 계산시 사용 
+--2번은 총계구할 때 계산값으로 사용
+
+
+
+--사전학습문제
+--각 행에 1학년부터 4학년까지 분리 한 행에 하나의 학년만 나오도록 (6장-06-002)
+--현재는 로우에 학년별 정원 -> 컬럼으로 학년별 정원이 나오도록 변환
+--12개 학과, 4학년 카타시안 곱 사용 & decode 사용 ???
+
+SELECT * FROM test11;
+
+        
+
+SELECT dept 
+         ,decode(rno,1,'1학년',2,'2학년',3,'3학년',4,'4학년') AS "학년"
+         ,decode(rno,1,fre,2,sup,3,jun,4,sen) AS "정원"
+FROM test11,
+        ( 
+        SELECT ROWNUM rno FROM dept WHERE ROWNUM <=4
+        )
+ORDER BY dept ASC, decode(rno,1,'1학년',2,'2학년',3,'3학년',4,'4학년') ASC;
+
+--실전문제
+--문제 : 사원테이블에서 job이 clerk인 사람의 급여 합,  salesman인 사람의
+--급여의 합을 구하고 나머지 job에 대해서는 기타 합으로 구하시오.
+
+SELECT dname FROM dept;
+
+--옆으로
+SELECT 1,2,3 FROM dual;
+
+--아래로 
+SELECT 1,2,3 FROM dual
+UNION ALL
+SELECT 1,2,3 FROM dual;
+
+
+
+--우선, 직업별 급여합계부터! 
+SELECT dname,       
+       sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+       sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+       sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+       sum(sal) AS "DEPT_SAL"
+FROM emp, dept
+GROUP BY dept.dname; 
+
+--총계넣기
+SELECT '총계',      
+       sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+       sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+       sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+       sum(sal) AS "DEPT_SAL"
+FROM emp; 
+
+--합치기 
+SELECT dname,       
+       sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+       sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+       sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+       sum(sal) AS "DEPT_SAL"
+FROM emp, dept
+WHERE emp.deptno = dept.deptno
+GROUP BY dept.dname 
+UNION ALL 
+SELECT '총계',      
+       sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+       sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+       sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+       sum(sal) AS "DEPT_SAL"
+FROM emp; 
+--개선여지 찾아보기 (테이블을 한번만 읽고 처리하도록!) 
+ 
+SELECT 
+        deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+FROM
+        (  
+        SELECT deptno,
+            sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+            sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+            sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+            sum(sal) AS "DEPT_SAL"
+        FROM emp 
+        GROUP BY deptno
+        );
+        
+SELECT dname, clerk, salesman, etc, dept_sal
+FROM
+        (
+        SELECT 
+        deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+        FROM
+        (  
+        SELECT deptno,
+            sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+            sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+            sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+            sum(sal) AS "DEPT_SAL"
+        FROM emp 
+        GROUP BY deptno
+        )
+        )E, dept d
+WHERE E.deptno = d.deptno;
+
+
+SELECT 
+        decode(b.rno,1,dname,2,'총계')
+FROM 
+        (
+        SELECT dname, clerk, salesman, etc, dept_sal
+         FROM
+            (
+            SELECT 
+                    deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+             FROM
+                    (  
+                    SELECT deptno,
+                              sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+                              sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+                              sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+                              sum(sal) AS "DEPT_SAL"
+                     FROM emp 
+                    GROUP BY deptno
+                    )
+            )E, dept d
+        WHERE E.deptno = d.deptno
+        )A,
+        (SELECT ROWNUM rno FROM dept WHERE ROWNUM < 3)b
+GROUP BY decode(b.rno,1,dname,2,'총계')
+ORDER BY decode(b.rno,1,dname,2,'총계');
+
+SELECT 
+        decode(b.rno,1,dname,2,'총계') AS "dname",max(clerk) AS "CLERK" , min(salesman) AS "SALESMAN", max(etc) AS "ETC"
+FROM 
+        (
+        SELECT dname, clerk, salesman, etc, dept_sal
+         FROM
+            (
+            SELECT 
+                    deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+             FROM
+                    (  
+                    SELECT deptno,
+                              sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+                              sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+                              sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+                              sum(sal) AS "DEPT_SAL"
+                     FROM emp 
+                    GROUP BY deptno
+                    )
+            )E, dept d
+        WHERE E.deptno = d.deptno
+        )A,
+        (SELECT ROWNUM rno FROM dept WHERE ROWNUM < 3)b
+GROUP BY decode(b.rno,1,dname,2,'총계')
+ORDER BY decode(b.rno,1,dname,2,'총계');
+
+SELECT 
+        decode(b.rno,1,dname,2,'총계') AS "dname",max(clerk) AS "CLERK" , min(salesman) AS "SALESMAN", max(etc) AS "ETC"
+FROM 
+        (
+        SELECT dname, clerk, salesman, etc, dept_sal
+         FROM
+            (
+            SELECT 
+                    deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+             FROM
+                    (  
+                    SELECT deptno,
+                              sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+                              sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+                              sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+                              sum(sal) AS "DEPT_SAL"
+                     FROM emp 
+                    GROUP BY deptno
+                    )
+            )E, dept d
+        WHERE E.deptno = d.deptno
+        )A,
+        (SELECT ROWNUM rno FROM dept WHERE ROWNUM < 3)b
+GROUP BY decode(b.rno,1,dname,2,'총계')
+ORDER BY decode(b.rno,1,dname,2,'총계');
