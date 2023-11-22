@@ -428,6 +428,14 @@ SELECT 'ÃÑ°è',
 FROM emp; 
 --°³¼±¿©Áö Ã£¾Æº¸±â (Å×ÀÌºíÀ» ÇÑ¹ø¸¸ ÀÐ°í Ã³¸®ÇÏµµ·Ï!) 
  
+SELECT deptno,
+    sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+    sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+    sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+    sum(sal) AS "DEPT_SAL"
+FROM emp 
+GROUP BY deptno;
+
 SELECT 
         deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
 FROM
@@ -459,6 +467,25 @@ FROM
         )E, dept d
 WHERE E.deptno = d.deptno;
 
+SELECT dname, clerk, salesman, etc, dept_sal
+         FROM
+            (
+            SELECT 
+                    deptno, CLERK, SALESMAN, ETC, DEPT_SAL        
+             FROM
+                    (  
+                    SELECT deptno,
+                              sum(DECODE (JOB, 'CLERK', sal)) AS "CLERK",
+                              sum(DECODE (JOB, 'SALESMAN', sal)) AS "SALESMAN",
+                              sum(DECODE (JOB,  'CLERK', NULL,  'SALESMAN', NULL, sal)) AS "ETC",
+                              sum(sal) AS "DEPT_SAL"
+                     FROM emp 
+                    GROUP BY deptno
+                    )
+            )E, dept d
+        WHERE E.deptno = d.deptno
+        )A,
+        (SELECT ROWNUM rno FROM dept WHERE ROWNUM < 3)b;
 
 SELECT 
         decode(b.rno,1,dname,2,'ÃÑ°è')
@@ -487,7 +514,7 @@ GROUP BY decode(b.rno,1,dname,2,'ÃÑ°è')
 ORDER BY decode(b.rno,1,dname,2,'ÃÑ°è');
 
 SELECT 
-        decode(b.rno,1,dname,2,'ÃÑ°è') AS "dname",max(clerk) AS "CLERK" , min(salesman) AS "SALESMAN", max(etc) AS "ETC"
+        decode(b.rno,1,dname,2,'ÃÑ°è') AS "dname",sum(clerk) AS "CLERK" , sum(salesman) AS "SALESMAN", sum(etc) AS "ETC"
 FROM 
         (
         SELECT dname, clerk, salesman, etc, dept_sal
@@ -513,7 +540,7 @@ GROUP BY decode(b.rno,1,dname,2,'ÃÑ°è')
 ORDER BY decode(b.rno,1,dname,2,'ÃÑ°è');
 
 SELECT 
-        decode(b.rno,1,dname,2,'ÃÑ°è') AS "dname",max(clerk) AS "CLERK" , min(salesman) AS "SALESMAN", max(etc) AS "ETC"
+        decode(b.rno,1,dname,2,'ÃÑ°è') AS "dname",sum(clerk) AS "CLERK" , sum(salesman) AS "SALESMAN", sum(etc) AS "ETC"
 FROM 
         (
         SELECT dname, clerk, salesman, etc, dept_sal
