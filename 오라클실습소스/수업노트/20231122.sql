@@ -254,7 +254,7 @@ FROM t_orderbasket,
             FROM dept 
             WHERE ROWNUM <3)b
             ,
-GROUP BY decode(b.rno,1,indate_vc,2,'ÃÑ°è')
+            GROUP BY decode(b.rno,1,indate_vc,2,'ÃÑ°è')
 ORDER BY ÆÇ¸Å³¯Â¥;
 
 
@@ -564,3 +564,5 @@ FROM
         (SELECT ROWNUM rno FROM dept WHERE ROWNUM < 3)b
 GROUP BY decode(b.rno,1,dname,2,'ÃÑ°è')
 ORDER BY decode(b.rno,1,dname,2,'ÃÑ°è');
+
+
