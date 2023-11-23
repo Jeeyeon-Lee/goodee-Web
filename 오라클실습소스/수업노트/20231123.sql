@@ -460,8 +460,72 @@ SELECT
  GROUP BY  decode(b.NO,1,A.dname,2,'총계')
  ORDER BY  decode(b.NO,1,A.dname,2,'총계');
 
+
+-----------------------------------------------------------------------------------------
+
+SELECT decode(b.rno,1,indate_vc, 2, '총계',3,'소계') AS " 판매날짜"
+         ,decode(b.rno,3,gubun_vc||'계',1,gubun_vc) AS "물품구분"
+         ,sum(qty_nu)  AS "판매수량"
+         ,sum(qty_nu*price_nu)  AS "판매가격"
+FROM t_orderbasket,
+             (SELECT ROWNUM rno FROM dept WHERE ROWNUM<4)b
+GROUP BY decode(b.rno,1,indate_vc, 2, '총계',3,'소계')
+             ,decode(b.rno,3,gubun_vc||'계',1,gubun_vc)
+ORDER BY decode(b.rno,1,indate_vc, 2, '총계',3,'소계')
+             ,decode(b.rno,3,gubun_vc||'계',1,gubun_vc);
+
+--오늘거 복습
+
+--(조건)날짜별, (조건)물품구분별 (그룹)판매개수와 (그룹)판매가격!!
+-- +전체 총계, 물품별 소계  
+
+--그룹함수 계산이 안되는 것 -> 날짜, 물품구분
+--그룹함수 되는 것->판매개수, 판매가격
+
+--1)전체 조회
 SELECT *
 FROM T_ORDERBASKET;
 
-SELECT indate_vc, gubun_vc, name_vc,qty_nu, qty_nu*price_nu
+--2)조회 시 참고해야하는 값 조회
+SELECT indate_vc, gubun_vc,qty_nu, qty_nu*price_nu
 FROM T_ORDERBASKET;
+
+--3)조인할 더미테이블 조회
+--왜 3개의 로우가 있는 테이블과 조인하는가?
+--롤업을 사용하지 않고, 추가하기 위해서 
+--현재 조회테이블 아래에 소계, 총계까지 추가하여 세 종류의 로우가 필요하기에!
+SELECT '1' NO FROM dual
+UNION ALL
+SELECT '2' FROM dual 
+UNION ALL
+SELECT '3' FROM dual;
+
+--4)조인해보기
+SELECT qty_nu, qty_nu*price_nu
+FROM T_ORDERBASKET,
+           (SELECT '1' NO FROM dual
+            UNION ALL
+            SELECT '2' FROM dual 
+            UNION ALL
+            SELECT '3' FROM dual
+           )b;
+ 
+--5)조인 후 decode 조건으로 rownum 별 설정하기
+--1은 판매날짜, 물품구분, 판매개수, 판매가격 다 출력
+--2는 판매날짜(소계)물품구분, 판매개수, 판매가격 출력 
+--3은 판매날짜(총계),판매개수,판매가격 출력           
+SELECT decode(b.NO,'1',indate_vc,'2','소계','3','총계') AS "판매날짜"
+           ,decode(b.NO,'1',gubun_vc,'2',gubun_vc) AS "물품구분"
+           ,sum(qty_nu)||'개' AS "판매개수"
+           ,to_char(sum(qty_nu*price_nu),'999,999')||'원' AS "판매가격"
+FROM T_ORDERBASKET,
+           (SELECT '1' NO FROM dual
+            UNION ALL
+            SELECT '2' FROM dual 
+            UNION ALL
+            SELECT '3' FROM dual
+           )b
+GROUP BY decode(b.NO,'1',indate_vc,'2','소계','3','총계')
+                ,decode(b.NO,'1',gubun_vc,'2',gubun_vc)
+ORDER BY decode(b.NO,'1',indate_vc,'2','소계','3','총계')
+               ,decode(b.NO,'1',gubun_vc,'2',gubun_vc);
