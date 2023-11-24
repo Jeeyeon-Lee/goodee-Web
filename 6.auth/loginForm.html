@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습[로그인 Form]</title>
+    <link rel="stylesheet" href="loginForm.css">
+    <script src="https://kit.fontawesome.com/635aebd3bd.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 백그라운드 이미지 -->
+    <div class="bg"></div>
+    <!-- 폼태그 form.login_form -->
+    <form action="XXX.html" class="login_form">
+        <h1>로그인</h1>
+        <!-- p : 단락처리 / lorem*10 : 더미 문자열 생성-->
+        <p>신규 사용자 <a href="#">계정 만들기</a></p>
+        <label for="useremail">
+            이메일 주소
+            <input type="email" id="useremail" placeholder="이메일 주소를 입력해주세요.">
+        </label>
+        <input type="submit" value="Continue" class="btn_submit">
+        <div class="divider">
+            <hr />
+            <span>or</span>
+        </div>
+        <button class="btn_google">
+            <i id="google" class="fa-brands fa-google"></i>  Google로 계속
+        </button>
+        <button class="btn_facebook">
+            <i id="facebook" class="fa-brands fa-facebook"></i>  Facebook으로 계속</button>
+        <button class="btn_github">
+            <i id="github" class="fa-brands fa-github"></i>   Github로 계속</button>
+    </form>
+
+</body>
+</html>

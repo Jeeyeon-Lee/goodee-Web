@@ -1,0 +1,63 @@
+<!-- 로그인 API -->
+<div class="row my-5 justify-content-center">
+  <div class="col-8 col-md-6 col-lg-4">
+    <h3 class="text-center mb-5">로그인</h3>
+    <form name="frm" method="post">
+      <div class="input-group my-2">
+        <div class="input-group-text">이 메 일</div>
+        <input class="form-control" name="email" value="tomato@hot.com" />
+      </div>
+      <div class="input-group">
+        <div class="input-group-text">비밀번호</div>
+        <input
+          class="form-control"
+          name="password"
+          type="password"
+          value="12345678"
+        />
+      </div>
+      <div class="my-3">
+        <button class="btn btn-success w-100">로그인</button>
+      </div>
+      <div class="text-end mt-3"><a href="/users/join">회원가입</a></div>
+    </form>
+  </div>
+</div>
+<script type="module">
+  import {app} from '/javascripts/firebase.js'
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"
+  const auth = getAuth(app)
+  console.log(auth);
+  //로그인 버튼 눌렀을 때 처리(버튼값이 묵인 변수 frm 사용)
+  // document.getElementByName(frm)
+  // submit 이슈 : submit이벤트 처리 시 캡처링으로 인한 이벤트 전이 발생
+  $(frm).on("submit", function(e){
+    console.log("로그인 버튼 클릭");
+    //이벤트 전이 방어
+    e.preventDefault();
+    //사용자 입력 이메일, 비번 담기
+    let email = $(frm.email).val();
+    let password = $(frm.password).val();
+    console.log(`${email} ${password}`);
+
+    //https://firebase.google.com/docs/auth/web/start?hl=ko&authuser=0
+    //기존 사용자가 자신의 이메일 주소와 비밀번호를 사용해 로그인할 수 있는 양식을 만듭니다. 
+    //사용자가 양식을 작성하면 signInWithEmailAndPassword 메서드를 호출합니다.
+    signInWithEmailAndPassword(auth, email, password)
+    .then((response) => {
+      // Signed in 
+      const user = response.user;
+      // JSON.stringify(user) -> string으로 전환이 되어서 글자를 알아볼 수 있다. object형식 말구~
+      console.log(`user ===> ${JSON.stringify(user)}`); //[object, Object]  - JSON.parse():JSON-Array
+      console.log(`uid ====> ${user.uid}`); 
+      console.log(`email ====> ${user.email}`);
+      localStorage.setItem("uid",`${user.uid}`)  // 로컬 브라우저 저장소에 담음
+      localStorage.setItem("email",`${user.email}`)  // 로컬 브라우저 저장소에 담음
+      location.href= '/'
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+  })
+</script>

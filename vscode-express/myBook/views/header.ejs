@@ -1,0 +1,152 @@
+<style>
+  /* 960보다 넓으면 없애도록 반응형 웹으로 설정 */
+  @media screen and (max-width: 960px){
+    #slider-div{
+      display: none;
+    }
+  }
+    
+</style>
+<nav class="navbar navbar-expand-lg bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">한빛미디어</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <!-- href="/" -->
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/board" >게시판</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#" id="youtube">🎞️유튜브</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#" id="movie">🎥영화</a>
+        </li>
+        <!-- 스타일은 클래스나 태그로, 이벤트는 id로!!  -->
+        <li class="nav-item" id="cart" style="display: none;">
+          <a class="nav-link active" aria-current="page" href="/users/cart">장바구니</a>
+        </li>
+      </ul>
+      <!-- ====================================[index/users]=================================== -->
+      <div class="d-flex">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" id="login">
+            <a class="nav-link active" aria-current="page" href="/login">로그인</a>
+          </li>
+          <li class="nav-item" id="email" style="display: none;">
+            <a class="nav-link active" aria-current="page" href="/users/mypage">마이페이지</a>
+          </li>
+          <li class="nav-item" id="logout" style="display: none;">
+            <a class="nav-link active" aria-current="page" href="/users/cart">로그아웃</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -------------------------------------------------------------------->
+<!-- 캐러셀 ---------------------------------------------------------------------------->
+
+<div id="slider-div">
+  <div>
+    <img src="/images/header01.png" alt="직장인을 위한 챗GPT" width="100%" />
+  </div>
+  <div>
+    <img src="/images/header02.png" alt="데이터 분석을 배우는" width="100%" />
+  </div>
+  <div>
+    <img src="/images/header03.png" alt="FastAPI를 사용한" width="100%" />
+  </div>
+  <div>
+    <img src="/images/header04.png" alt="챗GPT업무.." width="100%" />
+  </div>
+</div>
+
+<!-- 캐러셀 ---------------------------------------------------------------------------->
+<!-- 스크립트 이벤트  처리 ---------------------------------------------------------------------------->
+<!-- //export된 객체를 사용하기 위해서는 반드시 타입에 모듈을 작성해야 함.  -->
+<!-- //firebase.js에 정의되어있어서 import문이 필요함!(객체를 사용하기 위해서는) -->
+<script type="module">
+  import{app} from "/javascripts/firebase.js"
+  // signOut 구글에서 정리된 모듈 ->login.ejs 링크 확인 
+  import{signOut, getAuth} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"
+  //app으로 필요로하는 정보넘김
+  const auth = getAuth(app);
+  console.log(auth);
+  //DOM API - 복잡하고 가독성 낮음 -> JQuery가 제공하는 API로 가독성 좋게 DOM 조작하기 위해 사용
+  // 로그아웃 클릭 시 처음 페이지로 돌아가도록 설정 localhost:3000/으로 이동
+  // document.getElementById("logout").addEventListener('click',()=>{})  //DOM API 사용(표준)
+  // 코드 양이 늘어나고, 함수를 외워야 가능함. (단점 있음...)
+  // $(...)is not defined -> index.js에 jquery 1.12.0.js 임포트 되었는지 확인
+  $('#logout').on('click',()=>{
+    auth.signOut();
+    //아래 코드는 location.href="/"만나면 볼 수 없음. 왜냐면 주소 url 바뀌니까??
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      location.href="/"
+      console.log("로그아웃 성공-구글서버");
+    }).catch((error) => {
+      // 로그아웃 실패 시 호출 - 로그를 통해 정보 수집
+      console.log(error);
+    }); 
+    localStorage.clear()
+  })
+
+</script>
+<script>
+  console.log(`header - ${localStorage.getItem('email')}`);
+  // 로컬스토리지에 이메일 주소 있어?? 
+  // toggle() 켜져있음 꺼주고, 꺼져있음 켜주는 것
+  if (localStorage.getItem('email')) {
+    //왜 참이야?
+    console.log('여기로 들어왔니?');
+    //보이는 건 안보임, 안보이는건 보임
+    $('#login,  #logout, #email, #cart').toggle();
+    
+    $('#email a').html(localStorage.getItem('email'));
+
+  }
+
+
+  //function -> 전역적사용(호이스팅이슈 있음. 함수를 선호출한다.) / arrow function -> 순차적 사용(호이스팅 이슈 없음. 함수 호출 가능)
+  // applySlider()
+  applySlider = ()=> {
+    console.log("applySlider 함수 호출");
+    $('#slider-div').slick({
+      slide : 'div',  //슬라이드 되어야 할 태그 ex) div, li
+      infinite : true,  //무한 반복 옵션
+      slidesToShow :1,  // 한 화면에 보여질 컨텐츠 개수
+      slidesToScroll : 1,  //스크롤 한번에 움직일 컨텐츠 개수
+      speed : 100,  // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
+      arrows : true,  // 옆으로 이동하는 화살표 표시 여부
+      dots : true,  // 스크롤바 아래 점으로 페이지네이션 여부
+      autoplay : true,  // 자동 스크롤 사용 여부
+      autoplaySpeed : 10000,  // 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
+      pauseOnHover : true,  // 슬라이드 이동시 마우스 호버하면 슬라이더 멈추게 설정
+      vertical : false,  // 세로 방향 슬라이드 옵션
+      prevArrow : "<button type='button' class='slick-prev'><div style='font-size:1.5rem;color:white;'>&lt;</div></button>",
+      nextArrow : "<button type='button' class='slick-next'><div style='font-size:1.5rem;color:white;'>&gt;</div></button>",
+      dotsClass : "slick-dots",  //아래 나오는 페이지네이션(점) css class 지정
+      draggable : true,  //드래그 가능 여부 
+      responsive : [  // 반응형 웹구현 옵션
+      {
+        breakpoint : 960,  //화면 사이즈 960px
+        settings : { slidesToShow : 3 }  //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+      }, {
+        breakpoint : 768,  //화면 사이즈 768px
+        settings : { slidesToShow : 2 }  //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+      }
+    ]
+  });
+}
+//선호출(한번은 사용할거임.)
+applySlider();
+</script>
+
+<!-- 스크립트 이벤트  처리 ---------------------------------------------------------------------------->

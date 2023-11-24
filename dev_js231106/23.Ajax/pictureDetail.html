@@ -1,0 +1,24 @@
+<img id="imgDetail" src="../../images/sample/회의-2.jpg" alt="사진" />
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+  $(document).ready(function(){
+    console.log('pictureDetail.html');
+    const queryString = new URLSearchParams(location.search)
+    console.log(queryString);
+    const cid= queryString.get("id")
+    console.log(cid);
+    const pics = ["회의-1.jpg","회의-2.jpg","회의-3.jpg","회의-4.jpg"]
+    let img
+    for(let i=0;i<pics.length;i++){
+    //선택아이디와 배열의 인덱스가 같은데 확인
+      if((cid-1)==i){
+        img = pics[i]
+        console.log(img);
+        $('#imgDetail').attr('src','../../images/sample/'+img)
+      }else{
+        
+      }
+    }
+  })
+</script>

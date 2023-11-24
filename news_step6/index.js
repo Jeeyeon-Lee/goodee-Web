@@ -2,7 +2,6 @@ const ajax = new XMLHttpRequest(); //브라우저가 비동기처리를 위해 �
 const TITLE_URL = 'https://api.hnpwa.com/v0/news/1.json';
 const CONTENT_URL = 'https://api.hnpwa.com/v0/item/@id.json';
 const container = document.getElementById('root');
-const content = document.createElement('div');
 const ul = document.createElement('ul'); //DOM  API가지고 태그를 만드니까 직관적이지 않다. DOM Tree그려지지 않아서.
 
 getData = (url) => {

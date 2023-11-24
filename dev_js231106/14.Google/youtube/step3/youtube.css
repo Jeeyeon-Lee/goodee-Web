@@ -1,0 +1,73 @@
+*{
+  box-sizing: border-box;
+  /* border: 1px solid salmon; */
+}
+
+.header{
+  display: flex;
+  height: 4rem;
+  padding: 0.5rem 1rem;
+  background-color: black;
+}
+
+.LOGO{
+  display: flex;
+  align-items: center;
+  margin-right: 14px;
+}
+
+.input{
+  flex-basis: 100%;
+  font-size: 1.2rem;
+  outline: 0;
+}
+
+.btnSearch{
+  background-color: darkgray;
+  outline: 0;
+}
+.imageSearch{
+  height: 100%;
+  padding: 0.5rem 0.2rem;
+}
+/* ul 태그 작업 */
+.videos{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  list-style: none;
+  padding-left: 0px;
+  margin: 0px;
+  gap: 14px;
+}
+
+.container{
+  width: 100%;
+  padding: 0.2rem;
+  
+}
+
+.video{
+  display: flex;
+  border: 1px solid blanchedalmond;
+  box-shadow: 3px 3px 5px 0px rgba(191, 191, 191, 0.53);
+  cursor: grab;
+}
+
+.video :hover{
+  transform:scale(1.02);
+  transition:transform 250ms ease-in;
+  font-weight: bolder;
+}
+
+.thumbnail{
+  width: 40%;
+}
+.title,
+.channelTitle{
+  margin: 10px;
+  font-size: 1.0rem;
+}
+.channelTitle{
+  margin: 10px;
+  font-size: 0.6rem;
+}

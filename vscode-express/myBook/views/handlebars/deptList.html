@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습-Handlebars[템플릿엔진]</title>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+  crossorigin="anonymous"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+  <!-- 
+    x-handlebars-template sub mime type 은 표준이 아님 
+    표준이 아니라는 건 재해석이 필요하다는 것 - 모르는 애다.
+    재해석해야한다(파싱해야 한다.) 
+    핸들바스로 되어있는 템플릿을 컴파일한다. 
+    mime type을 핸들바스로 줌 
+  -->
+  <script id="tb_dept" type="text/x-handlebars-template">
+  <table class="table">
+    <!-- 테이블 헤더 -->
+    <thead>
+      <tr>
+        <th scope="col">부서번호</th>
+        <th scope="col">부서명</th>
+        <th scope="col">지역</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#depts}}
+      <tr>
+        <td>{{deptno}}</td>
+        <td>{{dname}}</td>
+        <td>{{loc}}</td>
+      </tr>
+      {{/depts}}
+    </tbody>
+  </script>
+</body>
+<script>
+  // 핸들바스 템플릿을 가져오기 
+  const tb_dept = $("#tb_dept").html()
+  const template = Handlebars.compile(tb_dept)
+  // 핸들바스 템플릿에 바인딩될 데이터 셋
+  const data = {
+  depts: [
+    { deptno: 10, dname: "개발1팀", loc: "서울" },
+    { deptno: 20, dname: "운영팀", loc: "제주" },
+    { deptno: 30, dname: "품질관리팀", loc: "세종" },
+  ],
+  };
+  // 핸들바 템플릿에서 데이터를 바인딩해서 html 새로 생성함 
+  const deptList = template(data)
+  // 위에서 생성된 템플릿을 body태그에 붙여넣음. 여기서 화면에 삽입
+  $('body').append(deptList)
+</script>
+</html>
+
+<!-- 
+select된 결과 3건이라면, for문 돌려서 한개로우씩 3번 반복되어야 한다.
+자바코드, 태그코드 섞이면 불편...(가독성 떨어짐) -> 태그로만 작성하자
+디자인과 로직의 분리가 필요하다 -> 괄호 짝이 안맞으면 무한 오류발생 
+대안 : 템플릿 엔진 지원
+-->

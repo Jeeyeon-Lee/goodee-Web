@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서관리시스템 - html 활용코드</title>
+</head>
+<body>
+  <button id="btnLogin">로그인</button>
+  <button id="btnLogout">로그아웃</button>
+  <script type="module">
+    //AuthLogic의 경우, import 할 때 export default인 경우, {} 쓰지 않음. 
+    import {firebaseapp} from "../서비스/firebase.js"
+    import {getAuth} from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
+    import AuthLogic from "../서비스/authLogic.js"
+    import {loginGoogle,logout} from "../서비스/authLogic.js"
+    const auth = getAuth(firebaseapp)
+    console.log(auth);
+    //AuthLogic의 경우, 클래스이기 때문에 인스턴스화 필요 -> 전변 호출 가능 
+    const authLogic = new AuthLogic()
+    console.log(AuthLogic);
+    // console.log(authLogic.googleProvider);
+    // console.log(authLogic['googleProvider']);
+    console.log(authLogic.googleProvider);
+    //로그인버튼에 이벤트 넣기 
+    const btnLogin = document.querySelector("#btnLogin")
+    //콜백일 때 async 붙이기
+    btnLogin.addEventListener('click',async(event)=>{
+      console.log('로그인버튼');
+      //submit 오류 방지를 위한 코드
+      event.preventDefault()
+      //비동기 처리로 인한 기다림 -> 안전하게 가져올 때 까지 async, await 붙이는 것 
+      const result = await loginGoogle(auth, authLogic.googleProvider);
+      console.log(result['uid']);
+      console.log(result.displayName);
+      console.log(result.email);
+    })
+
+    const btnLogout = document.querySelector('#btnLogout')
+    btnLogout.addEventListener('click',(event)=>{
+      logout(auth) //인증정보 쥐고 있는 auth
+    })
+  </script>
+</body>
+</html>

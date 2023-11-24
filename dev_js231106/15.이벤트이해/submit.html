@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습-서브밋이슈</title>
+  <script>
+    //이벤트 전이 차단 - e.preventDefault()
+    //테스트 시나리오 
+    //전이 차단 안 했을때? submit -> 전송-> 새로고침(부작용)
+    //전이 차단 했을때?
+    function login(event){
+      console.log(event.target);
+      console.log("로그인 호출 성공");
+      document.getElementById('f_login').submit();
+    }
+  </script>
+</head>
+<body>
+  <form id="f_login" method="get" action="./submitAction.html">
+    <input type="text" name="mem_id" id="mem_id">
+    <input type="button" value="로그인" onclick="login(event)">
+    <button id ="btnLogin">로그인2</button>
+    <!-- //button 태그에 이벤트? nope form 태그에 이벤트로 넣어야 함. -->
+  </form>
+    <script>
+      const flogin = document.querySelector('#f_login')
+      const login2 = (event)=>{
+        event.preventDefault();
+        console.log(event);
+      }
+      btnLogin.addEventListener('submit',login2) 
+      // 콜백함수(서브밋일 때, 로그인2 실행해줘)
+    </script>
+</body>
+</html>
