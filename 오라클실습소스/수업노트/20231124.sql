@@ -313,7 +313,31 @@ SELECT * FROM t_worktime;
 SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
 WHERE ROWNUM <4;
 
+--모든 경우의 수 가져오기(비교 준비)
+SELECT *
+FROM(
+        SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
+        WHERE ROWNUM <4
+        )A,
+        (
+        SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
+        WHERE ROWNUM <4
+        )b; 
 
+
+--오른쪽 시간보다 많은 수 카운트하기(많을 수록 느리니까 나중에 카운트하면 순위가 낮게 나옴)
+SELECT *
+FROM(
+        SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
+        WHERE ROWNUM <4
+        )A,
+        (
+        SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
+        WHERE ROWNUM <4
+        )b
+WHERE A.time_nu>=b.time_nu; 
+
+--답 : 앞의 정리 후 작업코드별 작업시간에 따른 순위를 표시 
 SELECT A.workcd_vc AS "작업코드", A.time_nu AS "작업시간", count(b.workcd_vc) 
 FROM(
         SELECT ROWNUM rno, workcd_vc, time_nu FROM t_worktime
