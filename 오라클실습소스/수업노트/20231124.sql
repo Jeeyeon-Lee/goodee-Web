@@ -274,20 +274,56 @@ SELECT dept_name AS "부서명"
         , parent_Dept AS "상위부서명"
 FROM tdept;
 
-SELECT 
-        A.dept_code AS "부서코드"
-        ,A.dept_name AS "부서명"
-        ,b.dept_name AS "상위부서명"
-FROM tdept A, tdept b;
 
---원하는 결과값
+--모든 경우의 수
 SELECT 
         A.dept_code AS "부서코드"
         ,A.dept_name AS "부서명"
         ,b.dept_name AS "상위부서명"
         ,b.dept_code AS "상위부서코드"
+FROM tdept A, tdept b;
+
+--원하는 결과값 
+SELECT 
+        A.dept_code AS "부서코드"
+        ,A.dept_name AS "부서명"
+        ,b.dept_name AS "상위부서명"
 FROM tdept A, tdept b
 WHERE A.parent_dept = b.dept_code;
+
+--프로시저
+
+CREATE OR REPLACE PROCEDURE proc_hap2(msg OUT varchar2)
+IS
+    n_i number(5) :=0;
+    n_hap number(5) :=0;
+BEGIN
+    FOR n_i IN 1..100 LOOP
+        IF mod(n_i,5) = 0 THEN
+            n_hap := n_hap + n_i;
+        END IF;
+    END LOOP;
+    msg :='5의 배수 합은 '||n_hap||' 입니다.';
+END;
+
+
+BEGIN 
+    proc_hap2;
+END;
+
+CREATE OR REPLACE FUNCTION SCOTT.func_crate(pdate varchar2)
+RETURN number
+IS
+    tmp number;
+BEGIN 
+    tmp :=0;
+    SELECT crate INTO tmp
+        FROM test02
+      WHERE cdate  = (SELECT max(cdate) FROM test02
+                                     WHERE cdate < pdate);
+    RETURN tmp;
+END;
+/
 
 BEGIN
     proc_fizzbuzz('');
@@ -296,6 +332,17 @@ END;
 BEGIN
     proc_dept(20);
 END; 
+
+CREATE OR REPLACE PROCEDURE proc_gugudan(dan IN number)
+IS
+     n_i number(2);
+BEGIN
+    n_i :=0;
+    dbms_output.put_line(dan||'단을 출력합니다.');
+    FOR n_i IN 1..9 LOOP
+       dbms_output.put_line(dan||'*'||n_i||'='||(dan*n_i));
+    END LOOP; 
+END;
 
 BEGIN
     proc_gugudan(3);
