@@ -293,6 +293,20 @@ WHERE A.parent_dept = b.dept_code;
 
 --프로시저
 
+CREATE OR REPLACE PROCEDURE proc_hello(x IN number, msg OUT varchar2)
+IS
+A number(5) := 0;
+BEGIN
+msg := '프로시저 메시지입니다.';
+dbms_output.put_line('hello oracle');
+dbms_output.put_line(to_char(sysdate, 'YYYY-MM-DD'));
+END;
+
+
+BEGIN 
+    proc_hello(1);
+END;
+
 CREATE OR REPLACE PROCEDURE proc_hap2(msg OUT varchar2)
 IS
     n_i number(5) :=0;
