@@ -182,7 +182,7 @@ WHERE price =(SELECT max(price) FROM book);
 --[질의 3-29] 도서를 구매한 적이 있는 고객의 이름을 검색하시오.
 SELECT DISTINCT(NAME)
 FROM customer, orders
-WHERE customer.custid = orders.custid
+WHERE customer.custid = orders.custid;
 
 --[질의 3-30] ‘대한미디어’에서 출판한 도서를 구매한 고객의 이름을 보이시오.
 SELECT NAME
@@ -200,7 +200,12 @@ SELECT publisher,avg(price) FROM book GROUP BY publisher;
 SELECT count(bookname)
 FROM book A
 WHERE price>
-            (SELECT publisher,avg(price) FROM book b GROUP BY publisher)
+          (SELECT publisher,avg(price) FROM book WHERE A.publisher = b.publisher);
+
+SELECT count(bookname)
+FROM book A
+WHERE price>
+          (SELECT publisher,avg(price) FROM book b GROUP BY publisher)
 AND A.publisher = b.publisher;
 
 
