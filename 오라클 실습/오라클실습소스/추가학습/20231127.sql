@@ -75,6 +75,7 @@ SELECT orderid, orderdate
 FROM orders
 WHERE orderdate NOT BETWEEN to_date('2020/07/04') AND to_date('2020/07/07');
 
+
 --2.6 ¼ºÀÌ ±è¾¾ÀÎ °í°´ÀÇ ÀÌ¸§°ú ÁÖ¼Ò
 SELECT NAME, address
 FROM customer
@@ -89,7 +90,15 @@ WHERE NAME LIKE '±è%¾Æ';
 SELECT NAME
 FROM customer
 WHERE custid NOT IN
-            (SELECT custid FROM orders);
+                 (SELECT custid FROM orders);
+                 
+
+SELECT c.NAME
+ FROM customer c
+ WHERE NOT EXISTS (SELECT *
+                          FROM orders o
+                          WHERE o.custid = c.custid
+                          );
 
 --2.9 ÁÖ¹® ±Ý¾×ÀÇ ÃÑ¾×°ú ÁÖ¹®ÀÇ Æò±Õ±Ý¾×
 SELECT sum(saleprice) ÃÑ¾×, avg(saleprice) Æò±Õ±Ý¾×
