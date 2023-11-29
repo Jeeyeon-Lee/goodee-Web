@@ -69,3 +69,4 @@ COMMIT;
 
 트리거의 응용
 
+exec proc_account2; 

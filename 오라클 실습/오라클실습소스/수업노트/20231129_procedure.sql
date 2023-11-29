@@ -61,6 +61,8 @@ COMMIT;
 END;
 
 
+
+
 --선생님 프로시저
 CREATE OR REPLACE PROCEDURE SCOTT.proc_account2
 IS
@@ -134,6 +136,13 @@ BEGIN
 END;
 /
 
+exec proc_account2;
+
+edit exam_paper;
+
+COMMIT;
+
+SELECT * FROM exam_paper;
 
 CREATE OR REPLACE PROCEDURE SCOTT.proc_login1(p_id IN varchar2, p_pw IN varchar2, r_msg OUT varchar2)
 IS
@@ -153,6 +162,8 @@ BEGIN
     END IF; 
 END;
 /
+
+exec proc_login1('kiwi', '111', :ms);
 
 --select into문은 PL/SQL에서만 사용 가능, 단일행만 담을 수 있음. 
 
