@@ -1,12 +1,12 @@
 import axios from 'axios';
 //Insert
-export const memberInsertDB = (params) => {
+export const json = (params) => {
   return new Promise((resolve, reject) => {
     try {
       //axios(object,)
       const response = axios({
         method : 'GET',
-        url : 'http://172.16.2.11:9000/member/memberInsert',
+        url : 'http://localhost:8000/mime/json.do',
         params : params   //params는 사용자가 입력한 값 -> 예 : 
       })
       resolve(response); //response => [{'mem-name':'나신입', 'mem-email':'na@hot.com'}] =>쿠키나 세션에 담음 

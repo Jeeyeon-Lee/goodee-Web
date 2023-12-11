@@ -1,0 +1,6 @@
+FILE="C:\Users\jeeye\dev\workspace\goodee-Web&Oracle\오라클 실습\오라클실습소스\수업노트\20231124\20231124.DMP"
+LOG="C:\Users\jeeye\dev\workspace\goodee-Web&Oracle\오라클 실습\오라클실습소스\수업노트\20231124\imp_20231124.log"
+FROMUSER=scott
+TOUSER=SCOTT
+IGNORE=Y
+FEEDBACK=1000

@@ -49,7 +49,7 @@ ORDER BY ename DESC;
 SELECT dname
 FROM emp, dept;
 
-DELETE FROM dept WHERE deptno IN(60);
+--DELETE FROM dept WHERE deptno IN(60);
 COMMIT;
 
 SELECT * FROM dept;
