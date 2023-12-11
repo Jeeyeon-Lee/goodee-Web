@@ -95,10 +95,18 @@ BEGIN
 END;
 
 --2.2 출판사별로 출판사 이름과 도서의 판매 총액을 보이시오(Orders 테이블 이용)
-CREATE OR REPLACE PROCEDURE
+--group, for문?, sum 
+CREATE OR REPLACE PROCEDURE proc_calc
 IS
 BEGIN
+    SELECT * FROM orders
 END;
+
+SELECT publisher, sum(saleprice) 
+          ,(SELECT bookname FROM book GROUP BY bookname) 
+FROM orders, book
+WHERE orders.bookid = book.bookid
+GROUP BY publisher;
 
 --2.3 출판사별로 도서의 편균가보다 비싼 도서의 이름을 보이시오(예를 들어 A 출판사 도서의 평균가가 20,000원이라면 A출판사 도서 중 20000원 이상인 도서를 보이면 됨)
 CREATE OR REPLACE PROCEDURE
